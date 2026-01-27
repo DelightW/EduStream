@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+/* 1. Define your design tokens */
+:root {
+  --edu-navy: #1a1b41;      /* The deep sidebar color from your image */
+  --edu-green: #00b894;     /* The "Instructor" button and active highlights */
+  --edu-bg-light: #f8f9fa;  /* The light grey background for the main content */
+  --edu-text-muted: #636e72; /* For the "Course title" labels */
+}
+
+/* 2. Apply base styles to the whole app */
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+  background-color: var(--edu-bg-light); /* Sets the light grey background seen in your design */
+}
+
+/* 3. Utility class for that specific green button in your mockup */
+.btn-primary-edu {
+  background-color: var(--edu-green) !important;
+  color: white !important;
+  border-radius: 8px; /* Matches the rounded corners in your Figma design */
+}
