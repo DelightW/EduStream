@@ -1,14 +1,30 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login'; // Corrected path to login.ts
+import { CommonModule } from '@angular/common';
 
-const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }
-];
+import { AuthRoutingModule } from './auth-routing-module';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegistrationComponent} from './registration/registration';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  declarations: [
+    LoginComponent,
+    RegistrationComponent,
+  ],
+  imports: [
+    CommonModule,
+    AuthRoutingModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    RouterModule,
+  ]
 })
-export class AuthModule { } // Changed from AuthRoutingModule to AuthModule
+export class AuthModule { }

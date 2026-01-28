@@ -1,9 +1,17 @@
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'app-login',
-  standalone: false, // Since you are using Modules
+  standalone: false, 
   templateUrl: './login.html',
-  styleUrl: './login.scss'
+  styleUrls: ['./login.scss']
 })
-export class LoginComponent { } // This name MUST match your import
+export class LoginComponent {
+  loginData = {
+    username: '',
+    password: ''
+  };
+
+  onLogin() {
+    console.log('Template Driven Login:', this.loginData);
+  }
+}
