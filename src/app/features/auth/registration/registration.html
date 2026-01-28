@@ -19,6 +19,9 @@
         <div class="input-wrapper">
           <input type="text" formControlName="fname" placeholder="Enter your full name">
         </div>
+        <div *ngIf="registerForm.get('fname')?.invalid && registerForm.get('fname')?.touched" class="error-msg">
+          <small>Full name is required.</small>
+        </div>
       </div>
 
       <div class="input-group">
@@ -26,11 +29,17 @@
         <div class="input-wrapper">
           <input type="email" formControlName="email" placeholder="Enter your email address">
         </div>
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-msg">
+          <small>Email must be valid.</small>
+        </div>
       </div>
     <div class="input-group">
         <label>Username</label>
         <div class="input-wrapper">
           <input type="text" formControlName="username" placeholder="Enter your username">
+        </div>
+        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="error-msg">
+          <small>Username must be at least 4 characters.</small>
         </div>
       </div>
       <div class="input-group">
@@ -38,11 +47,17 @@
         <div class="input-wrapper">
           <input type="password" formControlName="password" placeholder="Min. 8 characters">
         </div>
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-msg">
+          <small>Password must be at least 8 characters.</small>
+        </div>
       </div>
 <div class="input-group">
         <label>Confirm Password</label>
         <div class="input-wrapper">
           <input type="password" formControlName="cpassword" placeholder="Confirm your password">
+        </div>
+        <div *ngIf="registerForm.get('cpassword')?.invalid && registerForm.get('cpassword')?.touched" class="error-msg">
+          <small>Passwords should match.</small>
         </div>
       </div>
       <button type="submit" class="submit-btn" [disabled]="registerForm.invalid">

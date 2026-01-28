@@ -10,11 +10,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegistrationComponent} from './registration/registration';
 import { RouterModule } from '@angular/router';
+import { LandingComponent } from '../landing/landing';
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegistrationComponent,
+    LandingComponent,
   ],
   imports: [
     CommonModule,
