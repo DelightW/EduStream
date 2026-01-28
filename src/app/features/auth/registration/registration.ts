@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 export class RegistrationComponent implements OnInit {
   registerForm!: FormGroup;
   showSuccess: boolean = false;
+  title = 'EduStream - Registration';
+  emitedData: any;
 
   constructor(private fb: FormBuilder, private router: Router) {}
 
@@ -25,7 +27,11 @@ export class RegistrationComponent implements OnInit {
   
       validators: this.passwordMatchValidator 
     });
+
+    
   }
+
+ 
 
   passwordMatchValidator(group: FormGroup) {
     const password = group.get('password')?.value;

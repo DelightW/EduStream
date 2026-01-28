@@ -12,6 +12,7 @@ import { RegistrationComponent} from './registration/registration';
 import { RouterModule } from '@angular/router';
 import { LandingComponent } from '../landing/landing';
 
+
 @NgModule({
   declarations: [
     LoginComponent,

@@ -1,40 +1,59 @@
 <nav class="navbar">
-  <div class="nav-brand">
-    <span class="logo-text">EduStream</span>
-  </div>
-  <div class="nav-links">
-    <a routerLink="/" class="nav-item">Features</a>
-    <a routerLink="/" class="nav-item">Courses</a>
-    <button routerLink="/auth/login" class="nav-btn-login">Sign In</button>
-  </div>
-</nav>
+  </nav>
 
 <div class="landing-container">
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Master New Skills with <span>EduStream</span></h1>
-      <p>The enterprise-grade learning management system designed for the future of education.</p>
-      <div class="hero-btns">
-        <button class="btn-primary" routerLink="/auth/registration">Join Now</button>
-        <button class="btn-secondary">Explore Courses</button>
+  <div *ngIf="!showRoleSelection; else selectionView">
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Master New Skills with <span>EduStream</span></h1>
+        <p>The enterprise-grade learning management system designed for the future of education.</p>
+        <div class="hero-btns">
+          <button class="btn-primary" (click)="toggleRoleSelection()">Join Now</button>
+          <button class="btn-secondary">Explore Courses</button>
+        </div>
       </div>
-    </div>
-    <div class="hero-visual">
-       <img src="/assets/auth-illustration.avif" alt="Learning Illustration">
-    </div>
-  </section>
+      <div class="hero-visual">
+        <img src="/assets/illustration.png" alt="Learning Illustration">
+      </div>
+    </section>
 
-  <section class="features">
-    <h2>Why Choose EduStream?</h2>
-    <div class="feature-grid">
-      <div class="feature-card">
-        <h3>Streamlined Learning</h3>
-        <p>Access your courses anytime, anywhere with our responsive platform.</p>
+    <section class="features">
+      <h2>Why Choose EduStream?</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>Streamlined Learning</h3>
+          <p>Access your courses anytime, anywhere with our responsive platform.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Expert Led</h3>
+          <p>Learn from industry leaders through interactive video streams.</p>
+        </div>
       </div>
-      <div class="feature-card">
-        <h3>Expert Led</h3>
-        <p>Learn from industry leaders through interactive video streams.</p>
+    </section>
+  </div>
+
+  <ng-template #selectionView>
+    <div class="selection-page-wrapper">
+      <div class="selection-container">
+        <div class="selection-header">
+          <button class="btn-back" (click)="toggleRoleSelection()">← Back to Home</button>
+          <h2>How would you like to join?</h2>
+        </div>
+        
+        <div class="role-grid">
+          <div class="role-card" routerLink="/auth/registration">
+            <div class="role-icon">🧑‍🎓</div>
+            <h3>Join as Student</h3>
+            <p>Access world-class courses and track your learning progress.</p>
+          </div>
+
+          <div class="role-card" routerLink="/auth/registration">
+            <div class="role-icon">👨‍🏫</div>
+            <h3>Join as Instructor</h3>
+            <p>Create courses, manage students, and share your expertise.</p>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+  </ng-template>
 </div>

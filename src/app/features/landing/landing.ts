@@ -7,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./landing.scss']
 })
 export class LandingComponent {
-  constructor() {}
+  showRoleSelection: boolean = false;
+
+  toggleRoleSelection(){
+    this.showRoleSelection = !this.showRoleSelection;
+  }
 }

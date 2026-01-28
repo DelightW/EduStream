@@ -97,7 +97,7 @@
     display: block;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #374151;
+    color:#052873;
     margin-bottom: 0.5rem;
   }
 
@@ -118,7 +118,12 @@
     }
   }
 }
+.error-msg {
+  margin-top: 0.25rem;
+  color: #810606;
+  font-size: 0.75rem;
 
+}
 .submit-btn {
   width: 100%;
   padding: 0.875rem;
