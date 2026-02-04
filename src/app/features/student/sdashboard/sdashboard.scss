@@ -1,0 +1,157 @@
+/* Wrapper to match Instructor layout */
+.dashboard-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar: Using a dark Slate/Emerald theme */
+.sidebar {
+  width: 260px;
+  background-color: #0f172a; /* Deep Slate */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+
+  .brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    span {
+      color: #10b981; /* Emerald green for students */
+      font-size: 0.85rem;
+      background: rgba(16, 185, 129, 0.1);
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .nav-item {
+      text-decoration: none;
+      color: #94a3b8;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+      }
+
+      &.active {
+        background: #10b981;
+        color: white;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      }
+    }
+  }
+}
+
+/* Main Content area */
+.dashboard-main {
+  flex: 1;
+  padding: 48px;
+  max-width: 1200px;
+
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+
+    h1 {
+      font-size: 2rem;
+      color: #1e293b;
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .btn-logout {
+      background: white;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.2s;
+      cursor: pointer;
+
+      &:hover {
+        background: #f1f5f9;
+        color: #ef4444;
+        border-color: #fca5a5;
+      }
+    }
+  }
+}
+
+/* Course Cards Grid */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+
+  .course-card {
+    background: white;
+    padding: 28px;
+    border-radius: 20px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    h3 {
+      font-size: 1.25rem;
+      color: #0f172a;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    p {
+      color: #64748b;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+      border-color: #10b981;
+    }
+  }
+}
+
+/* Progress Bar Integration */
+.progress-track {
+  height: 8px;
+  background-color: #f1f5f9;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 15px 0;
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.bg-complete { background: #10b981; }
+    &.bg-ongoing  { background: #3b82f6; }
+    &.bg-start    { background: #94a3b8; }
+  }
+}

@@ -1,1 +1,36 @@
-<p>dashboard works!</p>
+<div class="dashboard-wrapper">
+  <aside class="instructor-sidebar">
+    <div class="brand">EduStream <span>Instructure</span></div>
+    <nav>
+      <a routerLink="./" class="active">Dashboard</a>
+      <a routerLink="/instructor/my-courses">My Courses</a>
+      <a routerLink="/instructor/students">Student List</a>
+    </nav>
+  </aside>
+
+  <header class="dashboard-header">
+  <h1>Hello, {{ instructorName }}!</h1>
+  <p *ngIf="instructorName === 'Delight'">  Welcome to your dashboard Instructor Delight</p>
+    <p *ngIf="instructorName === 'Hussein'">  Welcome to your dashboard Instructor Hussein</p>
+    <p *ngFor="let message of greetingmessages; let i=index"><span *ngIf="i === 1">{{ message}}</span></p>
+    <p [ngClass]="instructorName === 'Delight'? 'girly':'boy'">gender</p>
+</header>
+
+  <main class="dashboard-main">
+    <header class="dashboard-header">
+      <h1>Performance Overview</h1>
+      <button class="btn-logout" routerLink="/auth/login">Logout</button>
+    </header>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <label>Total Earnings</label>
+        <span class="value">$2,450.00</span>
+      </div>
+      <div class="stat-card">
+        <label>Enrollments</label>
+        <span class="value">842</span>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,43 @@
+<div class="dashboard-wrapper">
+  <aside class="sidebar">
+    <div class="brand">EduStream <span>Student</span></div>
+    <nav>
+      <a class="nav-item active">🏠 My Learning</a>
+      <a class="nav-item">📚 Catalog</a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <header class="dashboard-header">
+      <h1>Hello, {{ studentName }}!</h1>
+      <button class="btn-logout" routerLink="/auth/login">Logout</button>
+    </header>
+
+    <section class="content-body">
+      <h2>Your Enrolled Courses</h2>
+
+      <div class="empty-state" *ngIf="enrolledCourses.length === 0">
+        <p>You haven't enrolled in any courses yet.</p>
+        <button class="btn-primary">Browse Catalog</button>
+      </div>
+
+      <div class="course-grid" *ngIf="enrolledCourses.length > 0">
+        <div class="course-card" *ngFor="let course of enrolledCourses">
+        <h3>{{ course.title }}</h3>
+          
+          <div class="progress-track">
+            <div class="progress-fill" 
+                 [style.width.%]="course.progress"
+                 [ngClass]="{
+                    'bg-complete': course.progress === 100,
+                    'bg-ongoing': course.progress < 100 && course.progress > 0,
+                    'bg-start': course.progress === 0
+                 }">
+            </div>
+          </div>
+          <p>{{ course.progress }}% Complete</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
