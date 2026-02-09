@@ -1,0 +1,35 @@
+{
+  "enrollments": [
+    {
+      "id": "1",
+      "courseCode": "Java",
+      "studentEmail": "sophiadelight18@gmail.com",
+      "reason": "Interested in learning Java.",
+      "timestamp": "2026-02-09T10:00:00Z"
+    },
+    {
+      "id": "c0b9",
+      "courseCode": "Python",
+      "studentEmail": "sophiadelight18@gmail.com",
+      "reason": "Interested in learning python"
+    },
+    {
+      "id": "59de",
+      "courseCode": "Kotlin",
+      "studentEmail": "sophiadelight18@gmail.com",
+      "reason": "Interested in learning Kotlin"
+    },
+    {
+      "id": "c729",
+      "courseCode": "Kotlin",
+      "studentEmail": "sophiadelight18@gmail.com",
+      "reason": "Curious about Kotlin"
+    },
+    {
+      "id": "53ee",
+      "courseCode": "Python",
+      "studentEmail": "sophiadelight18@gmail.com",
+      "reason": "Love to learn"
+    }
+  ]
+}

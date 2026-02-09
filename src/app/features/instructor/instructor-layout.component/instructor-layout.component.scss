@@ -1,0 +1,51 @@
+.dashboard-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; /* Prevents the whole screen from scrolling */
+  background-color: #f0f2f5;
+}
+
+.instructor-sidebar {
+  width: 280px; /* Fixed width */
+  min-width: 280px; 
+  height: 100vh;
+  background: linear-gradient(180deg, #1a237e 0%, #0d47a1 100%);
+  color: white;
+  padding: 2rem;
+  box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+
+  .brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 3rem;
+    span { color: #82b1ff; font-weight: 300; }
+  }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: 0.3s;
+
+    &:hover, &.active {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      padding-left: 20px;
+    }
+  }
+}
+
+.dashboard-main {
+  flex: 1; /* Takes up remaining space */
+  height: 100vh;
+  overflow-y: auto; /* Only the content scrolls */
+  padding: 2.5rem;
+  /* No margin-left needed if using flexbox correctly here */
+}

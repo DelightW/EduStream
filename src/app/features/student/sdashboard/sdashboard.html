@@ -1,6 +1,6 @@
 <div class="dashboard-wrapper">
   <aside class="sidebar">
-    <div class="brand">EduStream <span>Student</span></div>
+    <div class="brand">EduStream <br><span>Student</span></div>
     <nav>
       <a class="nav-item active">🏠 My Learning</a>
       <a class="nav-item">📚 Catalog</a>
@@ -9,22 +9,52 @@
 
   <main class="dashboard-main">
     <header class="dashboard-header">
-      <h1>Hello, {{ studentName }}!</h1>
-      <button class="btn-logout" routerLink="/auth/login">Logout</button>
+      <div class="welcome-section">
+        <h1>Hello, {{ studentName }}!</h1>
+        <p class="subtitle">Welcome back to your learning journey.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn-enroll-trigger" (click)="openModal()">Enroll Course</button>
+        <button class="btn-logout" routerLink="/auth/login">Logout</button>
+      </div>
     </header>
 
     <section class="content-body">
-      <h2>Your Enrolled Courses</h2>
+      
+      <div class="institution-card">
+        <div class="card-info">
+          <h3>🏫 Academic Affiliation</h3>
+          <p>Select your university to sync with campus-specific resources.</p>
+        </div>
+        <div class="select-container">
+          <span *ngIf="isLoadingSchools" class="loader-text">Loading universities...</span>
+          <select *ngIf="!isLoadingSchools" [(ngModel)]="selectedSchool" (change)="onSchoolChange($event)">
+            <option value="" disabled>Choose your University...</option>
+            <option *ngFor="let school of schools" [value]="school.name">
+              {{ school.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <h2>Your Enrolled Courses</h2>
+        <span class="badge">{{ enrolledCourses.length }} Courses</span>
+      </div>
 
       <div class="empty-state" *ngIf="enrolledCourses.length === 0">
         <p>You haven't enrolled in any courses yet.</p>
-        <button class="btn-primary">Browse Catalog</button>
+        <button class="btn-primary" (click)="openModal()">Enroll Now</button>
       </div>
 
       <div class="course-grid" *ngIf="enrolledCourses.length > 0">
         <div class="course-card" *ngFor="let course of enrolledCourses">
-        <h3>{{ course.title }}</h3>
-          
+          <div class="course-info">
+            <h3>{{ course.title }}</h3>
+            <span class="status-tag" [class.complete]="course.progress === 100">
+              {{ course.progress === 100 ? 'Completed' : 'In Progress' }}
+            </span>
+          </div>
           <div class="progress-track">
             <div class="progress-fill" 
                  [style.width.%]="course.progress"
@@ -35,9 +65,38 @@
                  }">
             </div>
           </div>
-          <p>{{ course.progress }}% Complete</p>
+          <div class="progress-footer">
+             <p>{{ course.progress }}% Complete</p>
+          </div>
         </div>
       </div>
     </section>
   </main>
+</div>
+
+<div class="modal-overlay" *ngIf="showEnrollModal" (click)="closeModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>New Enrollment</h2>
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+    </div>
+    <form [formGroup]="enrollForm" (ngSubmit)="onEnroll()">
+      <div class="form-group">
+        <label>Course Name</label>
+        <input formControlName="courseCode" placeholder="Enter course name">
+      </div>
+      <div class="form-group">
+        <label>Contact Email</label>
+        <input formControlName="studentEmail" type="email" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <label>Reason</label>
+        <textarea formControlName="reason" placeholder="Why this course?"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="btn-primary" [disabled]="enrollForm.invalid">Submit Request</button>
+      </div>
+    </form>
+  </div>
 </div>

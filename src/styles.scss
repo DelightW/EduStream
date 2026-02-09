@@ -20,3 +20,7 @@ html, body {
   color: white !important;
   border-radius: 8px; /* Matches the rounded corners in your Figma design */
 }
+
+.swal2-container {
+  z-index: 999999 !important; 
+}

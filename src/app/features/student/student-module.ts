@@ -1,15 +1,23 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common'; // 1. Import this
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { StudentRoutingModule } from './student-routing-module';
-import { StudentDashboardComponent } from './sdashboard/sdashboard'; // Ensure path matches your 'sdashboard' folder
+import { StudentDashboardComponent } from './sdashboard/sdashboard';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NavigationComponent } from "../../navigation/navigation.component";
+
 
 @NgModule({
   declarations: [
     StudentDashboardComponent
   ],
   imports: [
-    CommonModule, 
-    StudentRoutingModule
-  ]
+    CommonModule,
+    StudentRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
+    NavigationComponent
+]
 })
 export class StudentModule { }

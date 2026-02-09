@@ -1,0 +1,20 @@
+<div class="dashboard-wrapper">
+  <aside class="instructor-sidebar">
+    <div class="brand">EduStream <br> <span>Instructor</span></div>
+    <nav>
+      <a routerLink="/instructor/dashboard" routerLinkActive="active">
+        <i class="icon">📊</i> Dashboard
+      </a>
+      <a routerLink="/instructor/my-courses" routerLinkActive="active">
+        <i class="icon">📚</i> My Courses
+      </a>
+      <a routerLink="/instructor/students" routerLinkActive="active">
+        <i class="icon">👨‍🎓</i> Student List
+      </a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+    <router-outlet></router-outlet>
+  </main>
+</div>

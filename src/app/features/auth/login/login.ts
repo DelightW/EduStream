@@ -17,14 +17,17 @@ export class LoginComponent {
 
   constructor(private router: Router, private apiService: ApiService) {}
 
-  onLogin() {
-  console.log('Verifying User:', this.loginData); 
-  this.apiService.setUser(this.loginData.username); 
-  const isInstructor = this.loginData.username.toLowerCase().includes('admin') || 
-                       this.loginData.username.toLowerCase().includes('instructor');
+onLogin() {
+  this.apiService.setUser(this.loginData.username);
+  const isInstructor = this.loginData.username.toLowerCase().includes('instructor');
+  console.log('Is Instructor:', isInstructor);
+
   if (isInstructor) {
+    console.log('Targeting Instructor Dashboard...');
     this.router.navigate(['/instructor/dashboard']);
   } else {
-    this.router.navigate(['/student']); }
+    console.log('Targeting Student Dashboard...');
+    this.router.navigate(['/student']); 
+  }
 }
   }

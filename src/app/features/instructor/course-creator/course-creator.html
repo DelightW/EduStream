@@ -1,1 +1,39 @@
-<p>course-creator works!</p>
+<button class="btn-create" (click)="toggleModal()">+ Create New Course</button>
+
+<div class="modal-overlay" *ngIf="showModal" (click)="toggleModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Launch New Course</h2>
+      <p>Fill in the details to publish your course to students.</p>
+    </div>
+
+    <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Course Title</label>
+          <input formControlName="title" placeholder="e.g. Advanced Server Administration">
+        </div>
+
+        <div class="form-group">
+          <label>Course Code</label>
+          <input formControlName="code" placeholder="e.g. ICS-3206">
+        </div>
+
+        <div class="form-group">
+          <label>Price (Ksh)</label>
+          <input type="number" formControlName="price" placeholder="0.00">
+        </div>
+
+        <div class="form-group full">
+          <label>Description</label>
+          <textarea formControlName="description" rows="3" placeholder="What will students learn?"></textarea>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="toggleModal()">Discard</button>
+        <button type="submit" class="btn-publish" [disabled]="courseForm.invalid">Publish Course</button>
+      </div>
+    </form>
+  </div>
+</div>

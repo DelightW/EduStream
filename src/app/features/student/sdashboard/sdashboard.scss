@@ -1,15 +1,47 @@
-/* Wrapper to match Instructor layout */
+/* Wrapper & Layout */
 .dashboard-wrapper {
   display: flex;
   min-height: 100vh;
   background-color: #f8fafc;
   font-family: 'Inter', sans-serif;
 }
+.swal2-popup {
+  font-family: 'Roboto', sans-serif !important;
+  border-radius: 15px !important;
+}
+.institution-card {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 
-/* Sidebar: Using a dark Slate/Emerald theme */
+  h3 { color: #2e7d32; margin: 0; } // Student Green
+  p { color: #78909c; font-size: 0.9rem; }
+
+  .select-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 250px;
+
+    select {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1.5px solid #c8e6c9;
+      border-radius: 8px;
+      outline: none;
+      background-color: #f9fbf9;
+      &:focus { border-color: #4caf50; }
+    }
+  }
+}
 .sidebar {
   width: 260px;
-  background-color: #0f172a; /* Deep Slate */
+  background-color: #0f172a;
   color: white;
   display: flex;
   flex-direction: column;
@@ -20,138 +52,135 @@
   box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
 
   .brand {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    
+    font-size: 1.5rem; font-weight: 800; margin-bottom: 40px; display: flex; align-items: center; gap: 8px;
     span {
-      color: #10b981; /* Emerald green for students */
-      font-size: 0.85rem;
-      background: rgba(16, 185, 129, 0.1);
-      padding: 4px 8px;
-      border-radius: 6px;
+      color: #10b981; font-size: 0.85rem; background: rgba(16, 185, 129, 0.1);
+      padding: 4px 8px; border-radius: 6px;
     }
   }
 
   nav {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-
+    display: flex; flex-direction: column; gap: 12px;
     .nav-item {
-      text-decoration: none;
-      color: #94a3b8;
-      padding: 12px 16px;
-      border-radius: 10px;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      cursor: pointer;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.05);
-        color: white;
-      }
-
-      &.active {
-        background: #10b981;
-        color: white;
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-      }
+      text-decoration: none; color: #94a3b8; padding: 12px 16px; border-radius: 10px;
+      font-weight: 500; transition: all 0.3s ease; cursor: pointer;
+      &:hover { background: rgba(255, 255, 255, 0.05); color: white; }
+      &.active { background: #10b981; color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
     }
   }
 }
 
-/* Main Content area */
+/* Main Dashboard Area */
 .dashboard-main {
   flex: 1;
   padding: 48px;
   max-width: 1200px;
 
   .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 40px;
-
-    h1 {
-      font-size: 2rem;
-      color: #1e293b;
-      margin: 0;
-      font-weight: 800;
-    }
-
-    .btn-logout {
-      background: white;
-      color: #64748b;
-      border: 1px solid #e2e8f0;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: all 0.2s;
-      cursor: pointer;
-
-      &:hover {
-        background: #f1f5f9;
-        color: #ef4444;
-        border-color: #fca5a5;
-      }
-    }
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;
+    h1 { font-size: 2rem; color: #1e293b; margin: 0; font-weight: 800; }
   }
 }
 
-/* Course Cards Grid */
+/* Course Grid & Progress Bars */
 .course-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
 
   .course-card {
-    background: white;
-    padding: 28px;
-    border-radius: 20px;
-    border: 1px solid #f1f5f9;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-    h3 {
-      font-size: 1.25rem;
-      color: #0f172a;
-      margin-bottom: 20px;
-      font-weight: 700;
-    }
-
-    p {
-      color: #64748b;
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
-      border-color: #10b981;
-    }
+    background: white; padding: 28px; border-radius: 20px; border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); transition: all 0.3s ease;
+    h3 { font-size: 1.25rem; color: #0f172a; margin-bottom: 20px; font-weight: 700; }
+    p { color: #64748b; font-weight: 600; font-size: 0.9rem; }
+    &:hover { transform: translateY(-5px); border-color: #10b981; }
   }
 }
 
-/* Progress Bar Integration */
 .progress-track {
-  height: 8px;
-  background-color: #f1f5f9;
-  border-radius: 10px;
-  overflow: hidden;
-  margin: 15px 0;
-
+  height: 8px; background-color: #f1f5f9; border-radius: 10px; overflow: hidden; margin: 15px 0;
   .progress-fill {
-    height: 100%;
-    border-radius: 10px;
-    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-
+    height: 100%; border-radius: 10px; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     &.bg-complete { background: #10b981; }
     &.bg-ongoing  { background: #3b82f6; }
     &.bg-start    { background: #94a3b8; }
   }
+}
+
+/* MODAL & FORM LOGIC (Integrated Fixes) */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(15, 23, 42, 0.7); /* Darker slate overlay */
+  display: flex; justify-content: center; align-items: center;
+  z-index: 9999; backdrop-filter: blur(8px);
+}
+
+.modal-card {
+  background: white; padding: 2.5rem; border-radius: 20px;
+  width: 95%; max-width: 480px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: modalAppear 0.3s ease-out;
+
+  .modal-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;
+    h2 { margin: 0; color: #1e293b; font-weight: 700; }
+    .close-btn { background: none; border: none; font-size: 2rem; cursor: pointer; color: #94a3b8; line-height: 1; }
+  }
+}
+
+/* Vertical Form Alignment (Prevents the "Squeezed" inputs) */
+.form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column; /* Stacks label on top */
+  width: 100%;
+
+  label { font-weight: 600; margin-bottom: 8px; color: #475569; font-size: 0.9rem; }
+  
+  input, textarea {
+    width: 100%; /* Forces full width */
+    padding: 12px 16px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.2s;
+    &:focus { border-color: #10b981; outline: none; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
+  }
+
+  textarea { min-height: 100px; resize: none; }
+  .error-msg, .error { color: #ef4444; margin-top: 5px; font-size: 0.8rem; font-weight: 500; }
+}
+
+/* Button & Action Logic */
+.modal-actions {
+  display: flex; justify-content: flex-end; gap: 12px; margin-top: 2rem;
+}
+
+.btn-enroll-trigger {
+  background-color: #10b981; color: white; border: none; padding: 10px 24px;
+  border-radius: 10px; cursor: pointer; font-weight: 700; transition: background 0.3s;
+  &:hover { background-color: #059669; }
+}
+
+.btn-logout {
+  background: white; color: #64748b; border: 1px solid #e2e8f0; padding: 8px 16px;
+  border-radius: 8px; font-weight: 600; cursor: pointer;
+  &:hover { background: #f1f5f9; color: #ef4444; border-color: #fca5a5; }
+}
+
+.btn-primary {
+  background: #10b981; color: white; border: none; padding: 12px 24px;
+  border-radius: 10px; font-weight: 700; cursor: pointer;
+  &:disabled { background-color: #cbd5e1; cursor: not-allowed; opacity: 0.7; }
+  &:hover:not(:disabled) { background-color: #059669; }
+}
+
+.btn-secondary {
+  background: #f1f5f9; color: #475569; border: none; padding: 12px 24px;
+  border-radius: 10px; font-weight: 600; cursor: pointer;
+  &:hover { background: #e2e8f0; }
+}
+
+@keyframes modalAppear {
+  from { opacity: 0; transform: translateY(15px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }

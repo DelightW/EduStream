@@ -1,11 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../../core/services/api';
 
 @Component({
   selector: 'app-course-list',
-  imports: [],
+  standalone: false,
   templateUrl: './course-list.html',
-  styleUrl: './course-list.scss',
+  styleUrls: ['./course-list.scss']
 })
-export class CourseList {
+export class CourseListComponent implements OnInit {
+  courses: any[] = [];
 
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.courses = this.apiService.getCourses();
+  }
 }

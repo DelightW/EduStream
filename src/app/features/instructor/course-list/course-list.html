@@ -1,1 +1,25 @@
-<p>course-list works!</p>
+<div class="course-list-page">
+  <div class="list-header">
+    <h1>My Published Courses</h1>
+    <app-course-creator></app-course-creator>
+  </div>
+
+  <table class="course-table">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Title</th>
+        <th>Price (Ksh)</th>
+        <th>Instructor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of courses">
+        <td>{{ c.code }}</td>
+        <td>{{ c.title }}</td>
+        <td>{{ c.price | number }}</td>
+        <td>{{ c.instructor }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

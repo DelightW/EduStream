@@ -1,36 +1,25 @@
-<div class="dashboard-wrapper">
-  <aside class="instructor-sidebar">
-    <div class="brand">EduStream <span>Instructure</span></div>
-    <nav>
-      <a routerLink="./" class="active">Dashboard</a>
-      <a routerLink="/instructor/my-courses">My Courses</a>
-      <a routerLink="/instructor/students">Student List</a>
-    </nav>
-  </aside>
-
-  <header class="dashboard-header">
-  <h1>Hello, {{ instructorName }}!</h1>
-  <p *ngIf="instructorName === 'Delight'">  Welcome to your dashboard Instructor Delight</p>
-    <p *ngIf="instructorName === 'Hussein'">  Welcome to your dashboard Instructor Hussein</p>
-    <p *ngFor="let message of greetingmessages; let i=index"><span *ngIf="i === 1">{{ message}}</span></p>
-    <p [ngClass]="instructorName === 'Delight'? 'girly':'boy'">gender</p>
+<header class="main-header">
+  <div class="welcome-text">
+    <h1>Hello, {{ instructorName }}!</h1>
+    <p class="subtitle">Welcome to your overview, {{ instructorName }}</p>
+  </div>
+  <button class="btn-logout" routerLink="/auth/login">Logout</button>
 </header>
 
-  <main class="dashboard-main">
-    <header class="dashboard-header">
-      <h1>Performance Overview</h1>
-      <button class="btn-logout" routerLink="/auth/login">Logout</button>
-    </header>
-
-    <div class="stats-row">
-      <div class="stat-card">
-        <label>Total Earnings</label>
-        <span class="value">$2,450.00</span>
-      </div>
-      <div class="stat-card">
-        <label>Enrollments</label>
-        <span class="value">842</span>
-      </div>
+<section class="stats-container">
+  <div class="stat-card">
+    <div class="stat-icon earnings-icon">💰</div>
+    <div class="stat-content">
+      <label>Total Earnings</label>
+      <span class="value">Ksh 2,450.00</span>
     </div>
-  </main>
-</div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-icon students-icon">👨‍🎓</div>
+    <div class="stat-content">
+      <label>Total Enrollments</label>
+      <span class="value">842</span>
+    </div>
+  </div>
+</section>

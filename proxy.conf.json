@@ -1,0 +1,11 @@
+{
+  "/api-schools": {
+    "target": "http://universities.hipolabs.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/api-schools": ""
+    }
+  }
+}
