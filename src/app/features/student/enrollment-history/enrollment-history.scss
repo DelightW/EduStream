@@ -1,77 +1,62 @@
-/* Wrapper & Layout */
-
-.swal2-popup {
-  font-family: 'Roboto', sans-serif !important;
-  border-radius: 15px !important;
-}
-/* sdashboard.scss */
-
-
-.institution-card {
+.history-container {
   background: white;
-  padding: 1.5rem 2rem;
-  border-radius: 16px;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  th {
+    padding: 12px 15px;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  td {
+    padding: 15px;
+    color: #1e293b;
+    font-size: 0.95rem;
+  }
+
+  tr:hover {
+    background-color: #f8fafc;
+  }
+}
+
+.action-group {
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
   align-items: center;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.btn-edit, .btn-delete {
+  background-color: #f1f5f9;
+  color: #2563eb;
+  border: 1px solid #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
 
-  h3 { color: #2e7d32; margin: 0; } // Student Green
-  p { color: #78909c; font-size: 0.9rem; }
-
-  .select-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 250px;
-
-    select {
-      width: 100%;
-      padding: 10px 15px;
-      border: 1.5px solid #c8e6c9;
-      border-radius: 8px;
-      outline: none;
-      background-color: #f9fbf9;
-      &:focus { border-color: #4caf50; }
-    }
+  &:hover {
+    background-color: #2563eb;
+    color: white;
+    border-color: #2563eb;
+    transform: translateY(-1px);
   }
 }
-
-
-/* Main Dashboard Area */
-  .dashboard-header {
-    display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;
-    h1 { font-size: 2rem; color: #1e293b; margin: 0; font-weight: 800; }
-  }
-
-
-/* Course Grid & Progress Bars */
-.course-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
-
-  .course-card {
-    background: white; padding: 28px; border-radius: 20px; border: 1px solid #f1f5f9;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02); transition: all 0.3s ease;
-    h3 { font-size: 1.25rem; color: #0f172a; margin-bottom: 20px; font-weight: 700; }
-    p { color: #64748b; font-weight: 600; font-size: 0.9rem; }
-    &:hover { transform: translateY(-5px); border-color: #10b981; }
-  }
-}
-
-.progress-track {
-  height: 8px; background-color: #f1f5f9; border-radius: 10px; overflow: hidden; margin: 15px 0;
-  .progress-fill {
-    height: 100%; border-radius: 10px; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    &.bg-complete { background: #10b981; }
-    &.bg-ongoing  { background: #3b82f6; }
-    &.bg-start    { background: #94a3b8; }
-  }
-}
-
-/* MODAL & FORM LOGIC (Integrated Fixes) */
 .modal-overlay {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(15, 23, 42, 0.7); /* Darker slate overlay */
@@ -90,8 +75,9 @@
     .close-btn { background: none; border: none; font-size: 2rem; cursor: pointer; color: #94a3b8; line-height: 1; }
   }
 }
-
-/* Vertical Form Alignment (Prevents the "Squeezed" inputs) */
+.modal-actions {
+  display: flex; justify-content: flex-end; gap: 12px; margin-top: 2rem;
+}
 .form-group {
   margin-bottom: 1.5rem;
   display: flex;
@@ -113,12 +99,6 @@
   textarea { min-height: 100px; resize: none; }
   .error-msg, .error { color: #ef4444; margin-top: 5px; font-size: 0.8rem; font-weight: 500; }
 }
-
-/* Button & Action Logic */
-.modal-actions {
-  display: flex; justify-content: flex-end; gap: 12px; margin-top: 2rem;
-}
-
 .btn-enroll-trigger {
   background-color: #10b981; color: white; border: none; padding: 10px 24px;
   border-radius: 10px; cursor: pointer; font-weight: 700; transition: background 0.3s;

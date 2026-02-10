@@ -1,0 +1,17 @@
+<div class="dashboard-wrapper">
+  <aside class="sidebar">
+    <div class="brand">EduStream <br><span>Student</span></div>
+    <nav>
+      <a routerLink="/student/sdashboard" routerLinkActive="active" class="nav-item">
+      <i class="icon">🏠</i> <span>My Learning</span></a>
+      <a routerLink="/student/course-list" routerLinkActive="active" class="nav-item">
+        <i class="icon">📚</i><span>Catalog</span></a>
+      <a routerLink="/student/enrollment-history" routerLinkActive="active" class="nav-item">
+        <i class="icon">📔</i><span>Enrollment History</span></a>
+    </nav>
+  </aside>
+
+  <main class="dashboard-main">
+  <router-outlet></router-outlet>
+  </main>
+  </div>

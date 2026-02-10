@@ -27,6 +27,22 @@ export class AlertService {
     });
   }
 
+   confirm(title: string, message: string): Promise<boolean> {
+     return Swal.fire({
+      icon: 'warning',
+      title: title,
+      text: message,
+      width: '350px',
+      padding: '1.5em', 
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#2e7d32', 
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      return result.isConfirmed;
+    });
+  }
   toast(message: string, icon: 'success' | 'error' | 'warning' = 'success') {
     const Toast = Swal.mixin({
       toast: true,

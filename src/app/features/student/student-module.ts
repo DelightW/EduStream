@@ -5,11 +5,17 @@ import { StudentRoutingModule } from './student-routing-module';
 import { StudentDashboardComponent } from './sdashboard/sdashboard';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NavigationComponent } from "../../navigation/navigation.component";
+import { StudentLayoutComponent } from './student-layout.component/student-layout.component';
+import { EnrollmentHistory } from './enrollment-history/enrollment-history';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
   declarations: [
-    StudentDashboardComponent
+    StudentLayoutComponent,
+    StudentDashboardComponent,
+    EnrollmentHistory,
+       
   ],
   imports: [
     CommonModule,
@@ -17,7 +23,8 @@ import { NavigationComponent } from "../../navigation/navigation.component";
     FormsModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
-    NavigationComponent
+    NavigationComponent,
+    MatTooltipModule
 ]
 })
 export class StudentModule { }

@@ -12,23 +12,37 @@ export class ApiService {
    
   constructor(private http: HttpClient) { }
 
-  updateEnrollment(id: number, data: any): Observable<any> {
-  return this.http.put(`${this.enrollmentUrl}/${id}`, data);
-}
-
-enrollInCourse(data: any): Observable<any> {
-  return this.http.post(this.enrollmentUrl, data);
-}
-    getEnrollmentHistory(): Observable<any[]> {
+  getEnrollmentHistory(): Observable<any[]> {
   return this.http.get<any[]>(this.enrollmentUrl);
   }
+  
+  enrollInCourse(data: any): Observable<any> {
+  return this.http.post(this.enrollmentUrl, data);
+  }
 
-   getSchools(): Observable<any> {
+
+  enrollInCoursePutPost(data: any, editingId: number | null): Observable<any> {
+    if(editingId){
+      return this.http.put(`${this.enrollmentUrl}/${editingId}`, data);
+    }else{
+      return this.http.post(this.enrollmentUrl, data);
+    }
+  }
+
+  updateEnrollment(id: number, data: any): Observable<any> {
+  return this.http.put(`${this.enrollmentUrl}/${id}`, data);
+  }
+
+  deleteEnrollment(id: number): Observable<any> {
+  return this.http.delete(`${this.enrollmentUrl}/${id}`);
+  }
+
+  getSchools(): Observable<any> {
    return this.http.get<any[]>(this.universityUrl).pipe(
     timeout(2000), 
     catchError(error => {
-      console.error('University API failed:', error);
-      return of([]);
+    console.error('University API failed:', error);  
+    return of([]);
       })
     );
 }

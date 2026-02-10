@@ -1,35 +1,28 @@
 {
   "enrollments": [
     {
-      "id": "1",
-      "courseCode": "Java",
-      "studentEmail": "sophiadelight18@gmail.com",
-      "reason": "Interested in learning Java.",
-      "timestamp": "2026-02-09T10:00:00Z"
+      "courseCode": "Understanding Java",
+      "studentEmail": "delightsoph@gmail.com",
+      "reason": "I want to know more about JAVA",
+      "id": "b663"
     },
     {
-      "id": "c0b9",
-      "courseCode": "Python",
+      "id": "6b7c",
+      "courseCode": "Angular",
       "studentEmail": "sophiadelight18@gmail.com",
-      "reason": "Interested in learning python"
+      "reason": "Extremely excited to learn Angular\n"
     },
     {
-      "id": "59de",
-      "courseCode": "Kotlin",
+      "id": "cb8c",
+      "courseCode": "Server Admin",
       "studentEmail": "sophiadelight18@gmail.com",
-      "reason": "Interested in learning Kotlin"
+      "reason": "Want to learn more about servers"
     },
     {
-      "id": "c729",
-      "courseCode": "Kotlin",
+      "id": "8476",
+      "courseCode": "Artificial Intelligence ",
       "studentEmail": "sophiadelight18@gmail.com",
-      "reason": "Curious about Kotlin"
-    },
-    {
-      "id": "53ee",
-      "courseCode": "Python",
-      "studentEmail": "sophiadelight18@gmail.com",
-      "reason": "Love to learn"
+      "reason": "Its nice learning experience"
     }
   ]
 }

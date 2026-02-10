@@ -64,7 +64,8 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "edu-stream:build:production"
+              "buildTarget": "edu-stream:build:production",
+              "poll": 1000
             },
             "development": {
               "buildTarget": "edu-stream:build:development"
