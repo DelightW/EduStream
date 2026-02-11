@@ -1,3 +1,4 @@
+// --- Container & Layout ---
 .history-container {
   background: white;
   padding: 20px;
@@ -5,7 +6,30 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   margin-top: 20px;
   overflow-x: auto;
+  min-height: 200px; 
 }
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #64748b;
+
+  .spinner {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    animation: spin 2s linear infinite;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 
 .history-table {
   width: 100%;
@@ -18,12 +42,19 @@
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    text-align: left;
+    border-bottom: 2px solid #f1f5f9;
   }
 
   td {
     padding: 15px;
     color: #1e293b;
     font-size: 0.95rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
   }
 
   tr:hover {
@@ -31,11 +62,32 @@
   }
 }
 
+// --- Badges & Titles ---
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  h2 { color: #1e293b; margin: 0; }
+}
+
+.badge {
+  background: #dcfce7;
+  color: #15803d;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+// --- Buttons & Actions ---
 .action-group {
   display: flex;
   gap: 10px;
   align-items: center;
 }
+
 .btn-edit, .btn-delete {
   background-color: #f1f5f9;
   color: #2563eb;
@@ -57,9 +109,16 @@
     transform: translateY(-1px);
   }
 }
+
+.btn-delete:hover {
+  background-color: #ef4444;
+  border-color: #ef4444;
+}
+
+// --- Modal System ---
 .modal-overlay {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(15, 23, 42, 0.7); /* Darker slate overlay */
+  background: rgba(15, 23, 42, 0.7); 
   display: flex; justify-content: center; align-items: center;
   z-index: 9999; backdrop-filter: blur(8px);
 }
@@ -75,19 +134,17 @@
     .close-btn { background: none; border: none; font-size: 2rem; cursor: pointer; color: #94a3b8; line-height: 1; }
   }
 }
-.modal-actions {
-  display: flex; justify-content: flex-end; gap: 12px; margin-top: 2rem;
-}
+
 .form-group {
   margin-bottom: 1.5rem;
   display: flex;
-  flex-direction: column; /* Stacks label on top */
+  flex-direction: column;
   width: 100%;
 
   label { font-weight: 600; margin-bottom: 8px; color: #475569; font-size: 0.9rem; }
   
   input, textarea {
-    width: 100%; /* Forces full width */
+    width: 100%;
     padding: 12px 16px;
     border: 1.5px solid #e2e8f0;
     border-radius: 10px;
@@ -97,20 +154,13 @@
   }
 
   textarea { min-height: 100px; resize: none; }
-  .error-msg, .error { color: #ef4444; margin-top: 5px; font-size: 0.8rem; font-weight: 500; }
-}
-.btn-enroll-trigger {
-  background-color: #10b981; color: white; border: none; padding: 10px 24px;
-  border-radius: 10px; cursor: pointer; font-weight: 700; transition: background 0.3s;
-  &:hover { background-color: #059669; }
 }
 
-.btn-logout {
-  background: white; color: #64748b; border: 1px solid #e2e8f0; padding: 8px 16px;
-  border-radius: 8px; font-weight: 600; cursor: pointer;
-  &:hover { background: #f1f5f9; color: #ef4444; border-color: #fca5a5; }
+.modal-actions {
+  display: flex; justify-content: flex-end; gap: 12px; margin-top: 2rem;
 }
 
+// --- Action Buttons ---
 .btn-primary {
   background: #10b981; color: white; border: none; padding: 12px 24px;
   border-radius: 10px; font-weight: 700; cursor: pointer;

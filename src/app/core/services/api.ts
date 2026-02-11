@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, timeout } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private universityUrl = '/api-schools/search?country=Kenya';
-  private enrollmentUrl = 'http://localhost:3000/enrollments';
+  private universityUrl = 'http://universities.hipolabs.com/search?country=Kenya';
+  private enrollmentUrl = 'enrollments';
    
   constructor(private http: HttpClient) { }
 
@@ -39,12 +39,8 @@ export class ApiService {
 
   getSchools(): Observable<any> {
    return this.http.get<any[]>(this.universityUrl).pipe(
-    timeout(2000), 
-    catchError(error => {
-    console.error('University API failed:', error);  
-    return of([]);
-      })
-    );
+    timeout(2000)
+   );
 }
 
   loggedInUser: string = '';

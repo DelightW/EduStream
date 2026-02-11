@@ -17,9 +17,10 @@
       <p>Select your university to sync with campus-specific resources.</p>
     </div>
     <div class="select-container">
-      <span *ngIf="isLoadingSchools" class="loader-text">Loading universities...</span>
-      <select *ngIf="!isLoadingSchools" [(ngModel)]="selectedSchool" (change)="onSchoolChange($event)">
+      <span *ngIf="loaderService.isLoading |async" class="loader-text">Loading universities...</span>
+      <select *ngIf="!(loaderService.isLoading | async)" [(ngModel)]="selectedSchool" (change)="onSchoolChange($event)">
         <option value="" disabled>Choose your University...</option>
+        <option *ngIf="schools.length === 0" disabled>No universities found</option>
         <option *ngFor="let school of schools" [value]="school.name">
           {{ school.name }}
         </option>

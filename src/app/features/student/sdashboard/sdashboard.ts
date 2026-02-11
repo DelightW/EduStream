@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../core/services/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../../../core/services/alert.service';
+import { LoaderService } from '../../../core/services/loader.service';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -15,7 +16,7 @@ export class StudentDashboardComponent implements OnInit {
   showEnrollModal: boolean = false;
   schools: any[] = [];
   selectedSchool: string = '';
-  isLoadingSchools: boolean = true;
+ 
 
   enrolledCourses = [
     { title: 'Intro to Web Design', progress: 100 },
@@ -27,6 +28,7 @@ export class StudentDashboardComponent implements OnInit {
     private apiService: ApiService, 
     private fb: FormBuilder, 
     private alertService: AlertService,
+    public loaderService: LoaderService,
   ) {}
 
   ngOnInit() {
@@ -36,7 +38,6 @@ export class StudentDashboardComponent implements OnInit {
     const savedName = this.apiService.getUser();
     this.studentName = savedName ? savedName : 'Student';
 
-    // Initialize form for fresh enrollments
     this.enrollForm = this.fb.group({
       courseCode: ['', [Validators.required, Validators.minLength(4)]],
       studentEmail: ['', [Validators.required, Validators.email]],
@@ -45,16 +46,8 @@ export class StudentDashboardComponent implements OnInit {
   }
 
   loadSchools() {
-    this.isLoadingSchools = true;
-    this.apiService.getSchools().subscribe({
-      next: (data) => { 
-        this.schools = [...data]; 
-        this.isLoadingSchools = false; 
-      },
-      error: (err) => {
-        console.error('Failed to load schools', err);
-        this.isLoadingSchools = false; 
-      }
+    this.apiService.getSchools().subscribe((data) => {
+      this.schools = [...data];
     });
   }
 
@@ -72,27 +65,22 @@ export class StudentDashboardComponent implements OnInit {
 
   closeModal() {
     this.showEnrollModal = false;
-    this.enrollForm.reset(); // Clear form for next time
+    this.enrollForm.reset();
   }
 
-  onEnroll() {
+onEnroll() {
     if (this.enrollForm.valid) {
       const formData = this.enrollForm.value;
 
-      // Only handle NEW enrollments here
-      this.apiService.enrollInCourse(formData).subscribe({
-        next: (response) => {
+      this.apiService.enrollInCourse(formData).subscribe((response) => {
           const newCourse = { title: formData.courseCode, progress: 0 };
           this.enrolledCourses.push(newCourse);
           this.closeModal();
           this.alertService.success('Enrollment Requested', `Success! Requested enrollment for ${newCourse.title}`);
-        },
-        error: (error) => {
-          this.alertService.error('Enrollment Failed', 'There was an error processing your enrollment.');
-        }
-      });
+      }); 
+
     } else {
       this.alertService.error('Invalid Form', 'Please fill out all fields correctly.');
     }
-  }
-}
+  } 
+} 
