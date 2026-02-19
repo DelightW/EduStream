@@ -1,1 +1,34 @@
-<p>enrollment-details works!</p>
+<div class="details-wrapper">
+  <div class="landing-hero" *ngIf="!(loaderService.isLoading | async) && !selectedEnrollment && !searchPerformed">
+    <div class="hero-content">
+      <h1>📚 Course Details</h1>
+      <p>Search your enrollment history or select a course from the history tab.</p>
+      
+      <div class="search-box">
+        <input type="text" placeholder="Search by Course Code..." #searchInput (keyup.enter)="onSearch(searchInput.value)">
+        <button class="btn-search" (click)="onSearch(searchInput.value)">🔍 Search</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loaderService.isLoading | async" class="loading-state">
+    <div class="spinner">⏳</div>
+    <p>Fetching enrollment details...</p>
+  </div>
+
+  <div class="details-container" *ngIf="!(loaderService.isLoading | async) && selectedEnrollment">
+     <button class="btn-back" (click)="resetView()"> Back to Search</button>
+     <h2>Details for: {{ selectedEnrollment.courseCode }}</h2>
+     
+     <div class="info-card">
+       <p><strong>Course:</strong> {{ selectedEnrollment.courseCode }}</p>
+       <p><strong>Email:</strong> {{ selectedEnrollment.studentEmail }}</p>
+       <p><strong>Status:</strong> {{ selectedEnrollment.progress }}%</p>
+     </div>
+  </div>
+
+  <div *ngIf="!(loaderService.isLoading | async) && !selectedEnrollment && searchPerformed" class="empty-state">
+    <p>No details found for that search. Try another course code!</p>
+    <button (click)="searchPerformed = false">Back to Overview</button>
+  </div>
+</div>

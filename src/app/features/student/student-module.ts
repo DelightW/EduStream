@@ -8,6 +8,7 @@ import { NavigationComponent } from "../../navigation/navigation.component";
 import { StudentLayoutComponent } from './student-layout.component/student-layout.component';
 import { EnrollmentHistory } from './enrollment-history/enrollment-history';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { EnrollmentDetails } from './enrollment-details/enrollment-details';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     StudentLayoutComponent,
     StudentDashboardComponent,
     EnrollmentHistory,
+    EnrollmentDetails,
        
   ],
   imports: [

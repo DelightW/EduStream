@@ -12,6 +12,7 @@ const routes: Routes = [
       { path: 'sdashboard', component: StudentDashboardComponent },
       { path: 'enrollment-history', component: EnrollmentHistory},
       { path: 'enrollment-details', component: EnrollmentDetails},
+      { path: 'enrollment-details/:id', component: EnrollmentDetails},
       { path: '', redirectTo: 'sdashboard', pathMatch: 'full'}
     ] }
   ];

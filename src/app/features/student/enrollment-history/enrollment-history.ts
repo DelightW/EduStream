@@ -3,6 +3,7 @@ import { AlertService } from '../../../core/services/alert.service';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ApiService } from '../../../core/services/api';
 import { LoaderService } from '../../../core/services/loader.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-enrollment-history',
@@ -27,6 +28,7 @@ import { LoaderService } from '../../../core/services/loader.service';
     private fb: FormBuilder,
     private apiService: ApiService,
     public loaderService: LoaderService,
+    private router: Router
   ) {}
   
   ngOnInit(){
@@ -66,6 +68,11 @@ import { LoaderService } from '../../../core/services/loader.service';
         });
       }
     });
+  }
+
+  viewEnrollment(id: any) {
+
+    this.router.navigate(['/student/enrollment-details', id]);
   }
 
     closeModal() {

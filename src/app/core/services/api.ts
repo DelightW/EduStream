@@ -12,66 +12,71 @@ export class ApiService {
    
   constructor(private http: HttpClient) { }
 
-  getEnrolledCourses(username: string): Observable<any[]> {
-  return this.http.get<any[]>(`${this.enrollmentUrl}?username=${username}`);
+   getEnrolledCourses(username: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.enrollmentUrl}?username=${username}`);
 }
-  getEnrollmentHistoryByUser(username: string): Observable<any[]> {
-  return this.http.get<any[]>(`${this.enrollmentUrl}?username=${username}`);
+    getEnrollmentHistoryByUser(username: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.enrollmentUrl}?username=${username}`);
   }
 
-  enrollInCoursePutPost(data: any, editingId: number | null): Observable<any> {
-    if(editingId){
+    enrollInCoursePutPost(data: any, editingId: number | null): Observable<any> {
+     if(editingId){
       return this.http.put(`${this.enrollmentUrl}/${editingId}`, data);
     }else{
       return this.http.post(this.enrollmentUrl, data);
     }
   }
 
-  updateEnrollment(id: number, data: any): Observable<any> {
-  return this.http.put(`${this.enrollmentUrl}/${id}`, data);
+    updateEnrollment(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.enrollmentUrl}/${id}`, data);
   }
 
-  deleteEnrollment(id: number): Observable<any> {
-  return this.http.delete(`${this.enrollmentUrl}/${id}`);
+    deleteEnrollment(id: number): Observable<any> {
+    return this.http.delete(`${this.enrollmentUrl}/${id}`);
   }
 
-  getSchools(): Observable<any> {
-   return this.http.get<any[]>(this.universityUrl).pipe(
+    getSchools(): Observable<any> {
+    return this.http.get<any[]>(this.universityUrl).pipe(
     timeout(2000)
    );
 }
 
-  loggedInUser: string = '';
-  private courses = [
+    loggedInUser: string = '';
+    private courses = [
     { code: 'ICS-3206', title: 'Server Administration', price: 4500, instructor: 'Instructor Hussein' }
   ];
-
- 
   
-  setUser(name: string) {
-  sessionStorage.setItem('username', name);
+    setUser(name: string) {
+    sessionStorage.setItem('username', name);
   }
-getUser(): string {
+    getUser(): string {
     return sessionStorage.getItem('username') || '';
   }
-  clearUser() {
+    clearUser() {
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('token');
     sessionStorage.clear();
   }
-  getCourses() {    return this.courses;
+    getCourses() {    return this.courses;
   } 
-  addCourse(course: any) {   
+    addCourse(course: any) {   
      this.courses.push(course);
   }
 
-  getUserSchool(username: string): Observable<any> {
+    getEnrollmentById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.enrollmentUrl}/${id}`);
+}
+    getEnrollmentsByCode(code: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.enrollmentUrl}?courseCode=${code}`);
+}
+
+    getUserSchool(username: string): Observable<any> {
     return this.http.get<any>(`preferences/${username}`);
 }
 
-saveUserSchool(username: string, schoolName: string): Observable<any> {
-  const data = { id: username, schoolName };
-  return this.http.put(`preferences/${username}`, data).pipe(
+    saveUserSchool(username: string, schoolName: string): Observable<any> {
+     const data = { id: username, schoolName };
+     return this.http.put(`preferences/${username}`, data).pipe(
     catchError(() => {
       return this.http.post(`preferences`, data);
     })
