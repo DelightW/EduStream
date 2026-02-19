@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, timeout } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { authGuard } from '../guards/auth-guard';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+  private baseUrl = environment.apiUrl;
+  private enrollmentUrl = `${this.baseUrl}/enrollments`;
   private universityUrl = 'http://universities.hipolabs.com/search?country=Kenya';
-  private enrollmentUrl = 'enrollments';
    
   constructor(private http: HttpClient) { }
 
