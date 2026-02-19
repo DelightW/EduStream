@@ -1,40 +1,73 @@
 {
   "enrollments": [
     {
-      "courseCode": "Understanding Java",
-      "studentEmail": "delightsoph@gmail.com",
-      "reason": "I want to know more about JAVA",
-      "id": "b663"
-    },
-    {
-      "id": "6b7c",
       "courseCode": "Angular",
       "studentEmail": "sophiadelight18@gmail.com",
-      "reason": "Extremely excited to learn Angular\n"
+      "reason": "Extremely excited to learn Angular\n",
+      "username": "Wambui",
+      "id": "6b7c"
     },
     {
       "id": "cb8c",
       "courseCode": "Server Admin",
       "studentEmail": "sophiadelight18@gmail.com",
-      "reason": "Want to learn more about servers"
+      "reason": "Want to learn more about servers",
+      "username": "Wambui",
+      "progress": 20
     },
     {
       "id": "8476",
       "courseCode": "Artificial Intelligence ",
       "studentEmail": "sophiadelight18@gmail.com",
-      "reason": "Its nice learning experience"
+      "reason": "Its nice learning experience",
+      "username": "Sophia",
+      "progress": 0
     },
     {
       "id": "1a40",
       "courseCode": "Learning Sql",
       "studentEmail": "sophiadelight18@gmail.com",
-      "reason": "Learn more about sql"
+      "reason": "Learn more about sql",
+      "username": "Sophia",
+      "progress": 100
     },
     {
       "id": "0619",
-      "courseCode": "nhjugy",
+      "courseCode": "Automata Theory",
       "studentEmail": "sophiadelight18@gmail.com",
-      "reason": "gfvdgyhujkm"
+      "reason": "gfvdgyhujkm",
+      "username": "Sophia",
+      "progress": 50
+    },
+    {
+      "id": "29bd",
+      "courseCode": "Learning Angular",
+      "studentEmail": "sophiadelight18@gmail.com",
+      "reason": "I am interested in learning Angular\n",
+      "username": "Sophia",
+      "progress": 0
+    },
+    {
+      "id": "f5c1",
+      "courseCode": "Java",
+      "studentEmail": "sophiadelight18@gmail.com",
+      "reason": "Java is an interesting language",
+      "username": "Wambui",
+      "progress": 0
+    },
+    {
+      "id": "6420",
+      "courseCode": "Python",
+      "studentEmail": "sophiadelight18@gmail.com",
+      "reason": "It is known as an easy language",
+      "username": "Wambui",
+      "progress": 0
+    }
+  ],
+  "preferences": [
+    {
+      "id": "Wambui",
+      "schoolName": "Strathmore University"
     }
   ]
 }

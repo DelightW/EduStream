@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { StudentDashboardComponent } from './sdashboard/sdashboard';
 import { StudentLayoutComponent } from './student-layout.component/student-layout.component';
 import { EnrollmentHistory} from './enrollment-history/enrollment-history';
+import { EnrollmentDetails } from './enrollment-details/enrollment-details';
 const routes: Routes = [
   { 
     path: '', 
@@ -10,6 +11,7 @@ const routes: Routes = [
     children: [
       { path: 'sdashboard', component: StudentDashboardComponent },
       { path: 'enrollment-history', component: EnrollmentHistory},
+      { path: 'enrollment-details', component: EnrollmentDetails},
       { path: '', redirectTo: 'sdashboard', pathMatch: 'full'}
     ] }
   ];

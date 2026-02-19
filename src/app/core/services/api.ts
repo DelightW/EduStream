@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, timeout } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-
+import { authGuard } from '../guards/auth-guard';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,14 +12,12 @@ export class ApiService {
    
   constructor(private http: HttpClient) { }
 
-  getEnrollmentHistory(): Observable<any[]> {
-  return this.http.get<any[]>(this.enrollmentUrl);
+  getEnrolledCourses(username: string): Observable<any[]> {
+  return this.http.get<any[]>(`${this.enrollmentUrl}?username=${username}`);
+}
+  getEnrollmentHistoryByUser(username: string): Observable<any[]> {
+  return this.http.get<any[]>(`${this.enrollmentUrl}?username=${username}`);
   }
-  
-  enrollInCourse(data: any): Observable<any> {
-  return this.http.post(this.enrollmentUrl, data);
-  }
-
 
   enrollInCoursePutPost(data: any, editingId: number | null): Observable<any> {
     if(editingId){
@@ -51,17 +49,32 @@ export class ApiService {
  
   
   setUser(name: string) {
-  localStorage.setItem('username', name);
+  sessionStorage.setItem('username', name);
   }
 getUser(): string {
-    return localStorage.getItem('username') || '';
+    return sessionStorage.getItem('username') || '';
   }
   clearUser() {
-    localStorage.removeItem('username');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('token');
+    sessionStorage.clear();
   }
   getCourses() {    return this.courses;
   } 
   addCourse(course: any) {   
      this.courses.push(course);
   }
+
+  getUserSchool(username: string): Observable<any> {
+    return this.http.get<any>(`preferences/${username}`);
+}
+
+saveUserSchool(username: string, schoolName: string): Observable<any> {
+  const data = { id: username, schoolName };
+  return this.http.put(`preferences/${username}`, data).pipe(
+    catchError(() => {
+      return this.http.post(`preferences`, data);
+    })
+  );
+}
 }

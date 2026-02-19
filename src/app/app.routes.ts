@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
   { 
@@ -7,12 +8,14 @@ export const routes: Routes = [
   },
   { 
     path: 'student', 
-    loadChildren: () => import('./features/student/student-module').then(m => m.StudentModule) 
+    loadChildren: () => import('./features/student/student-module').then(m => m.StudentModule),
+    canActivate: [authGuard]
   },
   { 
     path: 'instructor', 
-    loadChildren: () => import('./features/instructor/instructor-module').then(m => m.InstructorModule) 
+    loadChildren: () => import('./features/instructor/instructor-module').then(m => m.InstructorModule),
+    canActivate: [authGuard]
   },
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { path: '**', redirectTo: 'auth' } // Catch-all redirect
+  { path: '**', redirectTo: 'auth' }
 ];

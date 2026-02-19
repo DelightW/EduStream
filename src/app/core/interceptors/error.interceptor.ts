@@ -10,6 +10,9 @@ export class ErrorInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(
             catchError((error: HttpErrorResponse) => {
+                if (error.status === 404 && request.url.includes('preferences')) {
+                    return throwError(() => new Error('User preferences not found. Please set your school preference.'));
+                }
                 let errorMessage = 'An unknown error occurred!';
 
                 if (error.error instanceof ErrorEvent) {

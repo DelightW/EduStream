@@ -39,7 +39,9 @@ import { LoaderService } from '../../../core/services/loader.service';
     });
   }
     loadHistory(){
-     this.apiService.getEnrollmentHistory().subscribe((data)=> {
+      const currentUser = this.apiService.getUser();
+
+     this.apiService.getEnrollmentHistoryByUser(currentUser).subscribe((data)=> {
         this.history = [...data];
      });
     }
@@ -77,36 +79,20 @@ import { LoaderService } from '../../../core/services/loader.service';
   if (this.enrollForm.invalid) {
     return this.alertService.error('Invalid Form', 'Please fill out all fields correctly.');
   }
+  const formData ={
+    ...this.enrollForm.value,
+    username: this.apiService.getUser()};
 
-  const formData = this.enrollForm.value;
-
-  if (this.editingId) {
-    this.apiService.updateEnrollment(this.editingId, formData).subscribe(() => {
-      this.loadHistory();
-      this.closeModal();
-      this.alertService.success('Success!', 'Enrollment Updated');
-    });
-  } else {
-    this.apiService.enrollInCourse(formData).subscribe(() => {
-      this.loadHistory();
-      this.closeModal();
-      this.alertService.success('Success!', 'Enrollment Requested');
-    });
-  }
+  this.apiService.enrollInCoursePutPost(formData, this.editingId).subscribe(() => {
+    this.loadHistory();
+    this.closeModal();
+    const message = this.editingId ? 'Enrollment Updated' : 'Enrollment Requested';
+    this.alertService.success('Success!', message);
+  });
 }
   trackById(index: number, item: any) {
   return item.id; 
 }
 
 
-enroll2() {
-  if (this.enrollForm.valid) {
-    const formData = this.enrollForm.value;  
-    this.apiService.enrollInCoursePutPost(formData,this.editingId).subscribe((response) => {
-      this.loadHistory();
-      this.closeModal();
-      this.alertService.success('Success!', 'Enrollment Updated');
-    });
-  }
-}
 }
