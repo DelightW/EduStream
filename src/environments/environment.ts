@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
-  apiUrl: 'https://api.edustream-enterprise.com' 
+  production: false,
+  apiUrl: 'http://localhost:3000'
 };
