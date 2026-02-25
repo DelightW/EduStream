@@ -1,9 +1,12 @@
 FROM node:22-alpine AS build
 WORKDIR /app
 
+# Cache npm install layer separately
 COPY package*.json ./
+RUN npm ci --prefer-offline
+
+# Copy source and build
 COPY . .
-RUN npm install
 RUN ./node_modules/.bin/ng build --configuration production
 
 FROM nginx:alpine

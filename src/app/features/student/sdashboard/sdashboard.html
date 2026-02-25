@@ -88,8 +88,9 @@
       
       <div class="modal-actions">
         <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
-        <button type="submit" class="btn-primary" [disabled]="enrollForm.invalid">
-          Submit Request
+       <button type="submit" class="btn-primary" [disabled]="enrollForm.invalid || (loaderService.isLoading | async)">
+        <span *ngIf="loaderService.isLoading | async">Processing...</span>
+        <span *ngIf="!(loaderService.isLoading | async)">Submit Request</span>
         </button>
       </div>
     </form>

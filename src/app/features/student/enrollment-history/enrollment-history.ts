@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ApiService } from '../../../core/services/api';
 import { LoaderService } from '../../../core/services/loader.service';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-enrollment-history',
@@ -35,7 +36,7 @@ import { Router } from '@angular/router';
     this.loadHistory();
 
     this.enrollForm = this.fb.group({
-      courseCode: ['', [Validators.required, Validators.minLength(4)]],
+      courseCode: ['', [Validators.required, Validators.minLength(1)]],
       studentEmail: ['', [Validators.required, Validators.email]],
       reason: ['', [Validators.required, Validators.minLength(10)]]
     });
@@ -55,21 +56,29 @@ import { Router } from '@angular/router';
     this.enrollForm.patchValue({
       courseCode: item.courseCode,
       studentEmail: item.studentEmail,
-      reason: item.reason
-    });
+      reason: item.reason,
+  });
+
+  this.enrollForm.markAllAsTouched();
+  this.enrollForm.updateValueAndValidity();
   }
 
   deleteEnrollment(id: any) {
-    this.alertService.confirm('Delete Enrollment', 'Are you sure you want to delete this enrollment?').then((confirmed: boolean) => {
-      if(confirmed){
-        this.apiService.deleteEnrollment(id).subscribe(() => {
-        this.history = this.history.filter(item => item.id != id);
-        this.history = [...this.history];
+  this.alertService.confirm('Delete Enrollment', 'Are you sure?').then((confirmed: boolean) => {
+    if (confirmed) {
+      this.loaderService.show();
+      this.apiService.deleteEnrollment(id)
+        .pipe(finalize(() => this.loaderService.hide()))
+        .subscribe({
+          next: () => {
+            this.loadHistory(); 
+            this.alertService.success('Deleted', 'Enrollment removed.');
+          },
+          error: () => this.loadHistory() 
         });
-      }
-    });
-  }
-
+    }
+  });
+}
   viewEnrollment(id: any) {
 
     this.router.navigate(['/student/enrollment-details', id]);
@@ -81,21 +90,36 @@ import { Router } from '@angular/router';
     this.enrollForm.reset();
     
   }
-  
-  onEnroll() {
+
+onEnroll() {
   if (this.enrollForm.invalid) {
     return this.alertService.error('Invalid Form', 'Please fill out all fields correctly.');
   }
-  const formData ={
-    ...this.enrollForm.value,
-    username: this.apiService.getUser()};
 
-  this.apiService.enrollInCoursePutPost(formData, this.editingId).subscribe(() => {
-    this.loadHistory();
-    this.closeModal();
-    const message = this.editingId ? 'Enrollment Updated' : 'Enrollment Requested';
-    this.alertService.success('Success!', message);
-  });
+  this.loaderService.show(); 
+
+  const formData = {
+    ...this.enrollForm.value,
+    username: this.apiService.getUser()
+  };
+
+  this.apiService.enrollInCoursePutPost(formData, this.editingId)
+    .pipe(
+      finalize(() => {
+        this.loaderService.hide();
+        this.closeModal(); 
+      })
+    )
+    .subscribe({
+      next: () => {
+        this.loadHistory(); 
+        const message = this.editingId ? 'Enrollment Updated' : 'Enrollment Requested';
+        this.alertService.success('Success!', message);
+      },
+      error: () => {
+        this.loadHistory(); 
+      }
+    });
 }
   trackById(index: number, item: any) {
   return item.id; 

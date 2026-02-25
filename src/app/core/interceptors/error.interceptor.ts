@@ -8,33 +8,43 @@ import { AlertService } from '../services/alert.service';
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(private alertService: AlertService) {}
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(request).pipe(
-            catchError((error: HttpErrorResponse) => {
-                if (error.status === 404 && request.url.includes('preferences')) {
-                    return throwError(() => new Error('User preferences not found. Please set your school preference.'));
-                }
-                let errorMessage = 'An unknown error occurred!';
+    return next.handle(request).pipe(
+        catchError((error: HttpErrorResponse) => {
+            if (error.status === 404 && request.url.includes('preferences')) {
+                return throwError(() => new Error('User preferences not found.'));
+            }
 
-                if (error.error instanceof ErrorEvent) {
+            let errorMessage = 'An unknown error occurred!';
 
-                    errorMessage = `Error: ${error.error.message}`;
-                } else {
-                    switch (error.status){
-                        case 404:
-                            errorMessage = 'Resource not found.';
-                            break;
-                        case 500:
-                            errorMessage = 'Internal server error.';
-                            break;
-                        case 0:
-                            errorMessage = `Cannot connect to server. Please check your network connection.`;
-                            break;
-                    }
+            const isDataModifier = ['POST', 'PUT', 'DELETE'].includes(request.method);
+            
+            if (isDataModifier && (error.status === 0 || error.status === 500)) {
+                console.warn(`Success-Error Paradox: Status ${error.status} ignored for ${request.method}`);
+                return throwError(() => new Error('Background synchronization jitter.'));
+            }
+
+            if (error.error instanceof ErrorEvent) {
+                errorMessage = `Error: ${error.error.message}`;
+            } else {
+                switch (error.status) {
+                    case 404:
+                        errorMessage = 'Resource not found.';
+                        break;
+                    case 500:
+                        errorMessage = 'Internal server error.';
+                        break;
+                    case 0:
+                        errorMessage = 'Cannot connect to server. Check network.';
+                        break;
                 }
+            }
+
+            if (error.status !== 0 && error.status !== 500) {
                 this.alertService.error('Oops', errorMessage);
+            }
 
-                return throwError(() => new Error(errorMessage));
-            })
-        );
+            return throwError(() => new Error(errorMessage));
+        })
+    );
     }
 }

@@ -7,16 +7,16 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
-  private baseUrl = environment.apiUrl;
-  private enrollmentUrl = `${this.baseUrl}/enrollments`;
-  private universityUrl = 'http://universities.hipolabs.com/search?country=Kenya';
+    export class ApiService {
+      private baseUrl = environment.apiUrl;
+      private enrollmentUrl = `${this.baseUrl}/enrollments`;
+      private universityUrl = 'http://universities.hipolabs.com/search?country=Kenya';
    
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-   getEnrolledCourses(username: string): Observable<any[]> {
+    getEnrolledCourses(username: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.enrollmentUrl}?username=${username}`);
-}
+  }
     getEnrollmentHistoryByUser(username: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.enrollmentUrl}?username=${username}`);
   }
@@ -36,12 +36,14 @@ export class ApiService {
     deleteEnrollment(id: number): Observable<any> {
     return this.http.delete(`${this.enrollmentUrl}/${id}`);
   }
-
+    deleteInstructorCourse(id: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/history/${id}`);
+  }
     getSchools(): Observable<any> {
     return this.http.get<any[]>(this.universityUrl).pipe(
     timeout(2000)
    );
-}
+  }
 
     loggedInUser: string = '';
     private courses = [
@@ -67,21 +69,32 @@ export class ApiService {
 
     getEnrollmentById(id: string): Observable<any> {
     return this.http.get<any>(`${this.enrollmentUrl}/${id}`);
-}
+  }
     getEnrollmentsByCode(code: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.enrollmentUrl}?courseCode=${code}`);
-}
+  }
 
     getUserSchool(username: string): Observable<any> {
-    return this.http.get<any>(`preferences/${username}`);
-}
+    return this.http.get<any>(`${this.baseUrl}/preferences/${username}`);
+  }
 
     saveUserSchool(username: string, schoolName: string): Observable<any> {
-     const data = { id: username, schoolName };
-     return this.http.put(`preferences/${username}`, data).pipe(
-    catchError(() => {
-      return this.http.post(`preferences`, data);
-    })
-  );
-}
+    const data = { id: username, schoolName };
+    return this.http.put(`${this.baseUrl}/preferences/${username}`, data).pipe(
+        catchError(() => {
+            return this.http.post(`${this.baseUrl}/preferences`, data);
+        })
+    );
+  }
+
+  getHistoryByInstructor(name: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/history?instructor=${name}`);
+  }
+  saveInstructorCourse(data: any, id: number | null): Observable<any> {
+  if (id) {
+    return this.http.put(`${this.baseUrl}/history/${id}`, data);
+  } else {
+    return this.http.post(`${this.baseUrl}/history`, data);
+  }
+  }
 }

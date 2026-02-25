@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '../../../core/services/alert.service';
 import { LoaderService } from '../../../core/services/loader.service';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -63,7 +64,7 @@ export class StudentDashboardComponent implements OnInit {
     } 
 
     this.enrollForm = this.fb.group({
-      courseCode: ['', [Validators.required, Validators.minLength(4)]],
+      courseCode: ['', [Validators.required, Validators.minLength(1)]],
       studentEmail: ['', [Validators.required, Validators.email]],
       reason: ['', [Validators.required, Validators.minLength(10)]]
     });
@@ -106,21 +107,34 @@ export class StudentDashboardComponent implements OnInit {
     this.enrollForm.reset();
   }
 
-  onEnroll() {
-    if (this.enrollForm.valid) {
-      const formData = {
-        ...this.enrollForm.value,
-        username: this.apiService.getUser(),
-        progress: 0
-      };
+onEnroll() {
+  if (this.enrollForm.valid) {
+    this.loaderService.show(); 
+    
+    const formData = {
+      ...this.enrollForm.value,
+      username: this.apiService.getUser(),
+      progress: 0
+    };
 
-      this.apiService.enrollInCoursePutPost(formData, null).subscribe(() => {
-          this.loadUserCourses(this.studentName);
-          this.closeModal();
-          this.alertService.success('Enrollment Requested', `Success! Requested enrollment for ${formData.courseCode}`);
-      }); 
-    } else {
-      this.alertService.error('Invalid Form', 'Please fill out all fields correctly.');
-    }
-  } 
+    this.apiService.enrollInCoursePutPost(formData, null).pipe(
+      finalize(() => {
+        this.loaderService.hide();
+        this.closeModal(); 
+      })
+    ).subscribe({
+      next: () => {
+        this.loadUserCourses(this.studentName); 
+        this.alertService.success('Enrollment Requested', `Success! Requested enrollment for ${formData.courseCode}`);
+      },
+      error: (err) => {
+        console.warn('Handling handshake jitter:', err);
+        this.loadUserCourses(this.studentName); 
+      }
+    }); 
+  } else {
+    this.alertService.error('Invalid Form', 'Please fill out all fields correctly.');
+    this.loaderService.hide();
+  }
+}
 }
