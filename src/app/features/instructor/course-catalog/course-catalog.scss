@@ -1,0 +1,167 @@
+/* 1. Design Tokens */
+$emerald: #10b981;
+$emerald-hover: #059669;
+$slate-900: #0f172a;
+$slate-500: #64748b;
+$slate-text: #64748b;
+
+.catalog-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: fadeInDown 0.4s ease-in-out;
+
+  /* Centered Hero - Styled like Student Enrollment Details */
+  .catalog-hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 2px dashed #e2e8f0; // Matches Student UI
+    margin-bottom: 3rem;
+
+    .hero-content {
+      h1 {
+        font-size: 2.5rem;
+        color: $slate-900;
+        margin-bottom: 1rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+      }
+
+      p {
+        color: $slate-500;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+      }
+    }
+  }
+
+  /* Search Box - Unified with Student UI */
+  .search-box {
+    display: flex;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+
+    input {
+      flex: 1;
+      padding: 0.8rem 1.2rem;
+      border: 2px solid #cbd5e1;
+      border-right: none;
+      border-radius: 8px 0 0 8px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-color: $emerald;
+      }
+    }
+
+    .btn-search {
+      background: $emerald;
+      color: white;
+      border: none;
+      padding: 0 1.5rem;
+      border-radius: 0 8px 8px 0;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+
+      &:hover {
+        background: $emerald-hover;
+      }
+    }
+  }
+
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 2rem;
+  }
+
+  /* Card Styling */
+  .catalog-card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-8px);
+      border-color: $emerald;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-status-pill {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #ecfdf4;
+      color: $emerald;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+
+    .card-icon-box {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      background: #f8fafc;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+    }
+
+    .card-info {
+      h3 { font-size: 1.25rem; color: $slate-900; font-weight: 700; margin-bottom: 4px; }
+      .course-badge { color: $emerald; font-weight: 700; font-size: 0.85rem; }
+      .description { color: $slate-500; font-size: 0.9rem; margin-top: 10px; line-height: 1.5; }
+    }
+
+    .card-footer {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #f1f5f9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .student-count { font-size: 0.85rem; font-weight: 600; color: $slate-text; }
+      
+      .btn-manage {
+        background: $slate-900;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        &:hover { background: $emerald; }
+      }
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem;
+    color: $slate-500;
+    .empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+  }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

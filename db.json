@@ -71,5 +71,23 @@
     }
   ],
   "history": [
+     {
+      "title": "Advanced Angular",
+      "code": "CS-101",
+      "price": 7000,
+      "description": "Teaching tough concepts dealing with Angular",
+      "courseCode": "CS-101",
+      "instructor": "Instructor Wambui",
+      "id": "dd48"
+     },
+     {
+      "title": "Java Basics",
+      "code": "CS-102",
+      "price": 5000,
+      "description": "Teaching basics concepts dealing with Java",
+      "courseCode": "CS-102",
+      "instructor": "Instructor Wambui",
+      "id": "dd49"
+     }
   ]
 }

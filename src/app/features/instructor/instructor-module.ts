@@ -7,14 +7,15 @@ import { C } from '@angular/cdk/keycodes';
 import { CourseCreatorComponent } from './course-creator/course-creator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InstructorLayoutComponent } from './instructor-layout.component/instructor-layout.component';
-
+import { CourseCatalogComponent } from './course-catalog/course-catalog';
 
 @NgModule({
   declarations: [
     InstructorLayoutComponent,
     InstructorDashboardComponent,
     CourseListComponent,
-    CourseCreatorComponent
+    CourseCreatorComponent,
+    CourseCatalogComponent
   ],
   imports: [
     CommonModule,

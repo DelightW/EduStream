@@ -1,11 +1,11 @@
 <header class="dashboard-header">
-  <div class="welcome-section">
+  <div class="welcome-text">
     <h1>Hello, {{ instructorName }}!</h1>
-    <span class="subtitle">Welcome to your overview and analytics.</span>
-    <span class="subtitle">Manage your courses and track student progress.</span>
+    <p>Welcome to your overview and analytics. Manage your courses and track student progress.</p>
   </div>
+  
   <div class="header-actions">
-    <button class="btn-primary" (click)="openCourseModal()">Create Course</button>
+    <button class="btn-primary" (click)="openCourseModal()">+ Create Course</button>
     <button class="btn-logout" (click)="logout()">Logout</button>
   </div>
 </header>

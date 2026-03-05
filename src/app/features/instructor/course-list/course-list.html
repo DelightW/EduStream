@@ -1,25 +1,68 @@
-<div class="course-list-page">
-  <div class="list-header">
-    <h1>My Published Courses</h1>
-    <app-course-creator></app-course-creator>
+<div class="course-detail-container">
+  <header class="top-banner">
+    <div class="header-info">
+      <h2>{{ course?.title }} Course</h2>
+      <p class="instructor-sub">View and manage your weekly modules below.</p>
+    </div>
+    <span class="badge">{{ course?.courseCode }}</span>
+  </header>
+
+  <div class="stats-row compact">
+    <div class="lms-card-small">
+      <h3>📊 Active Enrollments</h3>
+      <p class="stat-value black-text">12</p>
+      <button class="btn-roster" (click)="viewRoster()">View Students</button>
+    </div>
+
+    <div class="lms-card-small">
+      <h3>👋 Pending Approvals</h3>
+      <p class="stat-value black-text">{{ pendingStudents.length }}</p>
+      <div class="quick-actions" *ngIf="pendingStudents.length > 0">
+        <button class="btn-approve-mini" (click)="approveAll()">Approve</button>
+        <button class="btn-decline-mini" (click)="declineAll()">Decline</button>
+      </div>
+      <p class="empty-msg-mini" *ngIf="pendingStudents.length === 0">No pending requests</p>
+    </div>
   </div>
 
-  <table class="course-table">
-    <thead>
-      <tr>
-        <th>Code</th>
-        <th>Title</th>
-        <th>Price (Ksh)</th>
-        <th>Instructor</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let c of courses">
-        <td>{{ c.code }}</td>
-        <td>{{ c.title }}</td>
-        <td>{{ c.price | number }}</td>
-        <td>{{ c.instructor }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="modules-stack">
+    <div class="weekly-module-full" *ngFor="let week of weeks">
+      
+      <div class="module-header">
+        <div class="week-title">
+          <h3>Week {{ week }}</h3>
+        </div>
+
+        <div class="instructor-actions">
+          <ng-container *ngIf="!(loaderService.isLoading | async); else btnLoader">
+            <button class="btn-action btn-add" (click)="addNote(week)">Add Text</button>
+            <input type="file" #fileInput style="display: none" (change)="onFileSelected($event, week)">
+            <button class="btn-action btn-file" (click)="fileInput.click()">Upload File</button>
+          </ng-container>
+
+          <ng-template #btnLoader>
+            <span class="mini-spinner">Processing...</span>
+          </ng-template>
+        </div>
+      </div> <div class="module-body">
+        <div class="notes-list" *ngIf="moduleContent[week.toString()]">
+          
+          <div class="note-item" *ngFor="let note of moduleContent[week.toString()].notes">
+            <p>{{ note }}</p>
+          </div>
+
+          <div class="file-item clickable" 
+               *ngFor="let file of moduleContent[week.toString()].files" 
+               (click)="downloadFile(file)">
+            <p>📄 {{ file.name }} <span class="download-hint">(Click to download)</span></p>
+          </div>
+          
+        </div>
+
+        <p class="empty-msg" *ngIf="!moduleContent[week.toString()] || (moduleContent[week.toString()].notes.length === 0 && moduleContent[week.toString()].files.length === 0)">
+          No resources uploaded for this week.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>

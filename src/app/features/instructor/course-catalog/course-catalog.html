@@ -1,0 +1,47 @@
+<div class="catalog-container">
+  <div class="catalog-hero">
+    <div class="hero-content">
+      <h1>📚 Search & Manage Your Courses</h1>
+      <p>Search your published course catalog or select a course to manage content.</p>
+      
+      <div class="search-box">
+        <input 
+          type="text" 
+          placeholder="Search by Course Code or Title..." 
+          #searchInput 
+          (keyup.enter)="onSearch(searchInput.value)">
+        <button class="btn-search" (click)="onSearch(searchInput.value)">🔍 Search</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="catalog-content">
+    <div class="course-grid" *ngIf="filteredCourses.length > 0">
+      <div class="catalog-card" *ngFor="let course of filteredCourses">
+        <div class="card-status-pill">Active</div>
+        <div class="card-icon-box">📚</div>
+        
+        <div class="card-info">
+          <h3>{{ course.title }}</h3>
+          <span class="course-badge">{{ course.courseCode }}</span>
+          <p class="description">{{ course.description | slice:0:60 }}...</p>
+        </div>
+
+        <div class="card-footer">
+          <div class="student-count">
+            <span class="count-icon">👥</span> 12 Students
+          </div>
+          <button class="btn-manage" (click)="goToManagement(course.id)">
+            Manage Module
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredCourses.length === 0">
+      <div class="empty-icon">📂</div>
+      <h2>No courses found</h2>
+      <p>Try adjusting your search terms or create a new course from the dashboard.</p>
+    </div>
+  </main>
+</div>

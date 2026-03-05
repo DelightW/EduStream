@@ -1,28 +1,128 @@
-/* Reusing your vertical form alignment */
-.form-group {
-  margin-bottom: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+// Color Palette Restoration
+$primary-emerald: #10b981; // Original Green
+$primary-blue: #3b82f6;    // Original Blue
+$bg-slate: #f8fafc;
 
-  label { font-weight: 600; margin-bottom: 8px; color: #1a237e; }
-  input, textarea {
-    padding: 12px;
-    border: 1px solid #c5cae9;
-    border-radius: 8px;
-    &:focus { border-color: #3f51b5; outline: none; }
+.course-detail-container {
+  padding: 1rem 3rem;
+  background: $bg-slate;
+
+  .stats-row.compact {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    max-width: 700px; // Keeping the top cards small
+
+    .lms-card-small {
+      flex: 1;
+      background: white;
+      padding: 1.25rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      text-align: center;
+      border: 1px solid #e2e8f0;
+
+      h3 { font-size: 0.8rem; color: #64748b; margin-bottom: 0.5rem; text-transform: uppercase; }
+      
+      .stat-value.black-text { 
+        font-size: 1.8rem; 
+        font-weight: 800; 
+        color: #000000; // Force black numbers as requested
+        margin-bottom: 0.75rem;
+      }
+
+      .btn-roster {
+        background: #f1f5f9;
+        border: none;
+        padding: 0.5rem;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 0.75rem;
+        width: 100%;
+        cursor: pointer;
+      }
+
+      .quick-actions {
+        display: flex;
+        gap: 6px;
+        button {
+          flex: 1;
+          border: none;
+          padding: 0.5rem;
+          border-radius: 6px;
+          font-weight: 700;
+          font-size: 0.7rem;
+          cursor: pointer;
+        }
+        .btn-approve-mini { background: $primary-emerald; color: white; }
+        .btn-decline-mini { background: #fee2e2; color: #ef4444; }
+      }
+    }
+  }
+  .file-item.clickable {
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: #f1f5f9;
+    .download-hint { opacity: 1; }
+  }
+
+  .download-hint {
+    font-size: 0.75rem;
+    color: #3b82f6;
+    opacity: 0;
+    margin-left: 10px;
+    font-weight: 600;
   }
 }
 
-/* Table Styling for course-list */
-.course-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  // Formatting Weekly Modules
+  .weekly-module-full {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #edf2f7;
 
-  th, td { padding: 1.2rem; text-align: left; border-bottom: 1px solid #f0f2f5; }
-  th { background: #f8faff; color: #78909c; text-transform: uppercase; font-size: 0.8rem; }
+    .module-header {
+      display: flex;
+      justify-content: space-between; // Pushes buttons to the right
+      align-items: center;
+      margin-bottom: 1.25rem;
+
+      h3 { color: #334155; font-size: 1.1rem; margin: 0; }
+    }
+  }
+
+  // Instructor Action Buttons with Original Colors
+  .instructor-actions {
+    display: flex;
+    gap: 10px;
+
+    .btn-action {
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+
+     &.btn-add { 
+        background: #f0fdf4; 
+        color: $primary-emerald; 
+        border: 1px solid #bbf7d0; 
+      }
+      &.btn-file { 
+        background: #eff6ff; 
+        color: #2563eb; 
+        border: 1px solid #bfdbfe; 
+      }
+
+      &:hover { transform: translateY(-1px); filter: brightness(0.95); }
+    }
+  }
 }

@@ -79,8 +79,8 @@ deleteCourse(id: any): void {
   });
 }
 
-viewCourse(id: any) {
-  this.router.navigate(['/instructor/my-courses'], { queryParams: { id: id } });
+viewCourse(id: string) {
+  this.router.navigate(['/instructor/view-course', id]);
 }
 
   openCourseModal(): void {
