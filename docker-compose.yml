@@ -5,16 +5,27 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - backend
+      backend:
+        condition: service_started
 
   backend:
     build:
-      context: .
-      dockerfile: Dockerfile.server
+      context: . # Point to your new Node.js folder
+      dockerfile: ./server/Dockerfile.server
     ports:
-      - "3000:3000"
+      - "3000:5000" # Map Docker port 3000 to Node's port 5000
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/edustream
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
     volumes:
-      - ./db.json:/app/db.json
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data: {}

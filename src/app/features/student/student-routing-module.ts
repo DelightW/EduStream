@@ -4,12 +4,16 @@ import { StudentDashboardComponent } from './sdashboard/sdashboard';
 import { StudentLayoutComponent } from './student-layout.component/student-layout.component';
 import { EnrollmentHistory} from './enrollment-history/enrollment-history';
 import { EnrollmentDetails } from './enrollment-details/enrollment-details';
+import { CourseViewerComponent } from './course-viewer/course-viewer';
+import { CourseworkComponent } from './coursework/coursework';
 const routes: Routes = [
   { 
     path: '', 
     component: StudentLayoutComponent,
     children: [
       { path: 'sdashboard', component: StudentDashboardComponent },
+      { path: 'coursework', component: CourseworkComponent }, 
+      { path: 'course-viewer/:id', component: CourseViewerComponent },
       { path: 'enrollment-history', component: EnrollmentHistory},
       { path: 'enrollment-details', component: EnrollmentDetails},
       { path: 'enrollment-details/:id', component: EnrollmentDetails},

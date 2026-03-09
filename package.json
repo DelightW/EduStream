@@ -2,12 +2,12 @@
   "name": "edu-stream",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "server": "npx json-server --watch db.json --port 3000",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+  "ng": "ng",
+  "start": "ng serve",
+  "build": "ng build",
+  "docker:up": "docker-compose up --build",
+  "docker:down": "docker-compose down",
+  "test": "ng test"
   },
   "prettier": {
     "printWidth": 100,

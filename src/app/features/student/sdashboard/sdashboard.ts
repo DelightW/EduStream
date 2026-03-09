@@ -37,6 +37,10 @@ export class StudentDashboardComponent implements OnInit {
       window.location.reload();
     });
   }
+  goToCourse(courseCode: string) {
+
+  this.router.navigate(['/student/course-viewer', courseCode]);
+}
 
   ngOnInit() {
     this.loadSchools();

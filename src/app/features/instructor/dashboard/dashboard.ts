@@ -80,6 +80,10 @@ deleteCourse(id: any): void {
 }
 
 viewCourse(id: string) {
+  if (!id) {
+    this.alertService.error('Error', 'Course ID is missing.');
+    return;
+  }
   this.router.navigate(['/instructor/view-course', id]);
 }
 
@@ -93,14 +97,21 @@ viewCourse(id: string) {
     this.editingId = null;
   }
 
-  onCreateCourse(): void {
+onCreateCourse(): void {
   if (this.courseForm.valid) {
     this.loaderService.show();
 
+    // 1. Capture the exact name used for filtering
+    const currentInstructor = this.apiService.getUser(); 
+
     const formData = {
-      ...this.courseForm.value,
-      courseCode: this.courseForm.value.code, 
-      instructor: this.instructorName
+      title: this.courseForm.value.title,
+      code: this.courseForm.value.code,
+      courseCode: this.courseForm.value.code, // Sync for catalog search
+      price: this.courseForm.value.price,
+      description: this.courseForm.value.description,
+      instructor: currentInstructor, // This MUST match your getUser() value
+      weeks: Array.from({ length: 12 }, (_, i) => ({ week: i + 1, notes: [], files: [] }))
     };
 
     this.apiService.saveInstructorCourse(formData, this.editingId).pipe(
@@ -109,11 +120,16 @@ viewCourse(id: string) {
         this.closeModal();
       })
     ).subscribe({
-      next: () => {
-        this.loadInstructorCourses(this.instructorName); // Refresh the cards
-        this.alertService.success('Success', this.editingId ? 'Course Updated' : 'Course Published');
+      next: (res) => {
+        console.log('Saved successfully to DB:', res);
+        // 2. Refresh using the exact same name
+        this.loadInstructorCourses(currentInstructor); 
+        this.alertService.success('Success', 'Course Published');
       },
-      error: () => this.loadInstructorCourses(this.instructorName) // Refresh even if handshake jitters
+      error: (err) => {
+        console.error('Database Error:', err);
+        this.alertService.error('DB Error', 'Check if json-server is running.');
+      }
     });
   }
 }

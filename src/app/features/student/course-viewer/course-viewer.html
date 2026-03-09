@@ -1,0 +1,65 @@
+<div class="viewer-layout" [class.dark-mode]="isDarkMode">
+  <nav class="viewer-nav">
+    <div class="nav-left">
+      <button class="btn-icon" (click)="closeViewer()">✕</button>
+      <span class="course-title">{{ currentCourse?.title || currentCourse?.courseCode }}</span>
+    </div>
+    
+    <div class="nav-right">
+      <select class="lang-select">
+        <option>EN</option>
+        <option>FR</option>
+      </select>
+      <button class="btn-theme" (click)="toggleDarkMode()">
+        {{ isDarkMode ? '☀️' : '🌙' }}
+      </button>
+    </div>
+  </nav>
+
+  <div class="viewer-main">
+    <aside class="viewer-sidebar">
+      <div class="sidebar-tabs">
+        <button [class.active]="activeTab === 'outline'" (click)="activeTab = 'outline'">Course Outline</button>
+        <button [class.active]="activeTab === 'resources'" (click)="activeTab = 'resources'">Resources</button>
+      </div>
+
+      <div class="sidebar-content">
+        <ul class="topic-list" *ngIf="activeTab === 'outline'">
+          <li *ngFor="let topic of topics" 
+              [class.completed]="topic.completed" 
+              [class.active]="currentTopic === topic.id">
+            <span class="status-marker">
+              <i *ngIf="topic.completed">✔</i>
+            </span>
+            <span class="topic-label" (click)="loadTopic(topic.id)">{{ topic.title }}</span>
+          </li>
+        </ul>
+
+        <div class="resource-list" *ngIf="activeTab === 'resources'">
+          <div class="resource-item" *ngFor="let file of resources">
+            <div class="file-info">
+              <span class="file-icon">📄</span>
+              <p>{{ file.fileName || file.name }}</p>
+            </div>
+            <button class="btn-download" (click)="download(file)">⬇</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="viewer-content">
+      <div class="scroll-area" #scrollContainer>
+        <div *ngFor="let topic of topics" [id]="topic.id" #contentSection class="topic-section">
+          <h2>{{ topic.title }}</h2>
+          <div class="content-body" [innerHTML]="topic.content"></div>
+          <div style="height: 400px;"></div> 
+        </div>
+      </div>
+
+      <footer class="content-controls">
+        <button (click)="prevTopic()" [disabled]="topics[0]?.id === currentTopic">‹ Back</button>
+        <button class="btn-next" (click)="nextTopic()" [disabled]="topics[topics.length-1]?.id === currentTopic">Next ›</button>
+      </footer>
+    </section>
+  </div>
+</div>

@@ -38,29 +38,26 @@
     <button class="btn-primary" (click)="openModal()">Enroll Now</button>
   </div>
 
-  <div class="course-grid" *ngIf="enrolledCourses.length > 0">
-    <div class="course-card" *ngFor="let course of enrolledCourses">
-      <div class="course-info">
-        <h3>{{ course.title }}</h3>
-        <span class="status-tag" [class.complete]="course.progress === 100">
-          {{ course.progress === 100 ? 'Completed' : 'In Progress' }}
-        </span>
-      </div>
-      <div class="progress-track">
-        <div class="progress-fill" 
-             [style.width.%]="course.progress"
-             [ngClass]="{
-               'bg-complete': course.progress === 100,
-               'bg-ongoing': course.progress < 100 && course.progress > 0,
-               'bg-start': course.progress === 0
-             }">
-        </div>
-      </div>
-      <div class="progress-footer">
-         <p>{{ course.progress }}% Complete</p>
-      </div>
+<div class="course-grid" *ngIf="enrolledCourses.length > 0">
+  <div class="course-card" *ngFor="let course of enrolledCourses">
+    <div class="course-info">
+      <h3>{{ course.title }}</h3>
+      <span class="status-tag" [class.complete]="course.progress === 100">
+        {{ course.progress === 100 ? 'Completed' : 'In Progress' }}
+      </span>
+    </div>
+    
+    <div class="progress-track">
+      <div class="progress-fill" [style.width.%]="course.progress"></div>
+    </div>
+
+    <div class="card-actions">
+      <button class="btn-resume-small" (click)="goToCourse(course.title)">
+        {{ course.progress > 0 ? 'Resume Study' : 'Start Learning' }}
+      </button>
     </div>
   </div>
+</div>
 </section>
 
 <div class="modal-overlay" *ngIf="showEnrollModal" (click)="closeModal()">
