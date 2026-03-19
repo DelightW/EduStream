@@ -8,6 +8,35 @@ $border-color: #e2e8f0;
 $white: #ffffff;
 $error-red: #ef4444;
 
+/* --- Global Utilities & Buttons --- */
+.btn-primary {
+  height: 48px;
+  background: $primary-emerald;
+  color: white;
+  border: none;
+  padding: 0 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+
+  &:hover { 
+    background: $hover-emerald; 
+    transform: translateY(-1px); 
+  }
+
+  &:disabled { 
+    background: $slate-text; 
+    cursor: not-allowed; 
+    opacity: 0.6; 
+    transform: none;
+  }
+}
+
 /* --- Layout Wrapper --- */
 .dashboard-wrapper {
   display: flex;
@@ -32,65 +61,60 @@ $error-red: #ef4444;
   padding: 10px 0;               
 
   .welcome-text {
-    flex: 1;                     /* Allows text to expand into available space */
-    padding-right: 20px;         /* Keeps a gap between text and buttons */
+    flex: 1;
+    padding-right: 20px;
     
     h1 {
-      font-size: 2.2rem;         /* Slightly reduced from 2.5rem to ensure fit */
+      font-size: 2.2rem;
       font-weight: 800;
-      color: #0f172a;
+      color: $slate-dark;
       margin: 0 0 4px 0;
       letter-spacing: -1px;
-      white-space: nowrap;       /* Prevents the name from ever breaking to a new line */
+      white-space: nowrap;
     }
 
     p {
       font-size: 1rem;
-      color: #64748b;
+      color: $slate-text;
       margin: 0;
       line-height: 1.4;
-      max-width: 500px;          /* Prevents the paragraph from getting too long */
+      max-width: 500px;
     }
   }
 
   .header-actions {
     display: flex;
     gap: 10px;                  
-    flex-shrink: 0;              /* Prevents buttons from getting squashed */
-    
-    .btn-primary, .btn-logout {
-      height: 40px;              /* Slightly shorter height */
-      padding: 0 16px;           /* Less internal padding */
-      min-width: 110px;          /* Reduced from 140px to save space */
+    flex-shrink: 0;
+
+    /* Specific override for header button sizing */
+    .btn-primary {
+      height: 40px;
+      padding: 0 16px;
+      min-width: 110px;
+      font-size: 0.85rem;
+      border-radius: 10px;
+    }
+
+    .btn-logout {
+      height: 40px;
+      padding: 0 16px;
+      min-width: 110px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 10px;
       font-weight: 700;
-      font-size: 0.85rem;        /* Slightly smaller text */
+      font-size: 0.85rem;
       cursor: pointer;
       transition: all 0.2s ease;
-    }
-
-    .btn-primary {
-      background: #10b981;
-      color: white;
-      border: none;
-      
-      &:hover {
-        background: #059669;
-        transform: translateY(-1px);
-      }
-    }
-
-    .btn-logout {
       background: white;
-      color: #64748b;
-      border: 1px solid #e2e8f0;
+      color: $slate-text;
+      border: 1px solid $border-color;
       
       &:hover {
-        background: #f1f5f9;
-        color: #ef4444;
+        background: $slate-light;
+        color: $error-red;
         border-color: #fca5a5;
         transform: translateY(-1px);
       }
@@ -176,7 +200,7 @@ $error-red: #ef4444;
     gap: 6px;
   }
 
-  .btn-view-small:hover { background: #f8fafc; color: #3b82f6; border-color: #3b82f6; }
+  .btn-view-small:hover { background: $slate-light; color: #3b82f6; border-color: #3b82f6; }
   .btn-edit-small:hover { background: #f0fdf4; color: $primary-emerald; border-color: $primary-emerald; }
   .btn-delete-small:hover { background: #fef2f2; color: $error-red; border-color: #fca5a5; }
 }
@@ -186,7 +210,7 @@ $error-red: #ef4444;
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
-  background: rgba(15, 23, 42, 0.6); // Darker overlay
+  background: rgba(15, 23, 42, 0.6);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
@@ -254,7 +278,22 @@ $error-red: #ef4444;
   display: flex;
   gap: 12px;
   justify-content: flex-end;
-  button { height: 48px; border-radius: 12px; font-weight: 700; }
+  
+  /* Modal buttons use the global .btn-primary size */
+  button { 
+    height: 48px; 
+    border-radius: 12px; 
+    font-weight: 700; 
+  }
+
+  .btn-secondary {
+    padding: 0 24px;
+    background: white;
+    color: $slate-text;
+    border: 1px solid $border-color;
+    cursor: pointer;
+    &:hover { background: $slate-light; }
+  }
 }
 
 /* --- Animation --- */

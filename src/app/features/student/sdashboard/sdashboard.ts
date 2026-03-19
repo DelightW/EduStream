@@ -28,20 +28,6 @@ export class StudentDashboardComponent implements OnInit {
     private router: Router,
   ) {}
 
-  logout() {
-    this.apiService.clearUser();
-    this.studentName = '';
-    this.enrolledCourses = [];
-    this.selectedSchool = '';
-    this.router.navigate(['/auth/login'], { replaceUrl: true }). then(() => {
-      window.location.reload();
-    });
-  }
-  goToCourse(courseCode: string) {
-
-  this.router.navigate(['/student/course-viewer', courseCode]);
-}
-
   ngOnInit() {
     this.loadSchools();
     
@@ -49,11 +35,8 @@ export class StudentDashboardComponent implements OnInit {
     this.studentName = savedName ? savedName : 'Student';
 
     if (savedName) {
-
       const localSchool = sessionStorage.getItem(`${savedName}_userSchool`);
-      if (localSchool) {
-        this.selectedSchool = localSchool;
-      }
+      if (localSchool) this.selectedSchool = localSchool;
 
       this.apiService.getUserSchool(savedName).subscribe({
         next: (pref) => {
@@ -67,48 +50,31 @@ export class StudentDashboardComponent implements OnInit {
       this.loadUserCourses(savedName);
     } 
 
-    this.enrollForm = this.fb.group({
-      courseCode: ['', [Validators.required, Validators.minLength(1)]],
-      studentEmail: ['', [Validators.required, Validators.email]],
-      reason: ['', [Validators.required, Validators.minLength(10)]]
-    });
+this.enrollForm = this.fb.group({
+  courseCode: ['', [Validators.required]], 
+  studentEmail: ['', [Validators.required, Validators.email]], 
+  reason: ['', [Validators.required, Validators.minLength(10)]],
+  instructorName: ['Instructor Wambui'] 
+});
   }
 
   loadUserCourses(username: string) {
     this.apiService.getEnrolledCourses(username).subscribe((data) => {
       this.enrolledCourses = data.map(item => ({
-        title: item.courseCode,
-        progress: item.progress || 0  
+        title: item.courseCode, // Or map to a real title if you fetch course details
+        courseCode: item.courseCode,
+        progress: item.progress || 0,
+        status: item.status || 'pending' // track if approved
       }));
     });
   }
 
-  loadSchools() {
-    this.apiService.getSchools().subscribe((data) => {
-      this.schools = [...data];
-    });
-  }
-
-  onSchoolChange(event: any) {
-    const schoolName = event.target.value;
-    if (schoolName && this.studentName) {
-      const userSpecificKey = `${this.studentName}_userSchool`;
-      sessionStorage.setItem(userSpecificKey, schoolName);
-      this.selectedSchool = schoolName;
-
-      this.apiService.saveUserSchool(this.studentName, schoolName).subscribe();
-      
-      this.alertService.toast(`School updated to ${schoolName}`);
+  goToCourse(course: any) {
+    if (course.status === 'approved') {
+      this.router.navigate(['/student/course-viewer', course.courseCode]);
+    } else {
+      this.alertService.error('Access Denied', 'Waiting for Instructor approval.');
     }
-  }
-
-  openModal() { 
-    this.showEnrollModal = true; 
-  }
-
-  closeModal() {
-    this.showEnrollModal = false;
-    this.enrollForm.reset();
   }
 
 onEnroll() {
@@ -116,12 +82,15 @@ onEnroll() {
     this.loaderService.show(); 
     
     const formData = {
-      ...this.enrollForm.value,
+      courseCode: this.enrollForm.value.courseCode,
+      studentEmail: this.enrollForm.value.studentEmail,
+      reason: this.enrollForm.value.reason,
+      instructorName: this.enrollForm.value.instructorName || 'Instructor Wambui',
       username: this.apiService.getUser(),
-      progress: 0
+      status: 'pending'
     };
 
-    this.apiService.enrollInCoursePutPost(formData, null).pipe(
+    this.apiService.requestEnrollment(formData).pipe(
       finalize(() => {
         this.loaderService.hide();
         this.closeModal(); 
@@ -129,16 +98,33 @@ onEnroll() {
     ).subscribe({
       next: () => {
         this.loadUserCourses(this.studentName); 
-        this.alertService.success('Enrollment Requested', `Success! Requested enrollment for ${formData.courseCode}`);
+        this.alertService.success('Success', `Requested enrollment for ${formData.courseCode}`);
       },
-      error: (err) => {
-        console.warn('Handling handshake jitter:', err);
-        this.loadUserCourses(this.studentName); 
+      error: (err: any) => {
+        this.alertService.error('Error', 'Failed to request enrollment');
       }
     }); 
-  } else {
-    this.alertService.error('Invalid Form', 'Please fill out all fields correctly.');
-    this.loaderService.hide();
   }
 }
+
+  loadSchools() {
+    this.apiService.getSchools().subscribe((data) => this.schools = [...data]);
+  }
+
+  onSchoolChange(event: any) {
+    const schoolName = event.target.value;
+    if (schoolName && this.studentName) {
+      this.selectedSchool = schoolName;
+      sessionStorage.setItem(`${this.studentName}_userSchool`, schoolName);
+      this.apiService.saveUserSchool(this.studentName, schoolName).subscribe();
+      this.alertService.toast(`School updated`);
+    }
+  }
+
+  openModal() { this.showEnrollModal = true; }
+  closeModal() { this.showEnrollModal = false; this.enrollForm.reset(); }
+  logout() { 
+    this.apiService.clearUser(); 
+    this.router.navigate(['/auth/login']); 
+  }
 }

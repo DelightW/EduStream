@@ -2,63 +2,139 @@
   display: flex;
   min-height: 100vh;
   background-color: #f8fafc;
-  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
+
+  /* Global Main Content Area */
+  .dashboard-main {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    max-width: 1200px; // Default constraint for dashboard
+    margin: 0 auto;
+
+    /* THE FIX: When the viewer is active, this closes the gap */
+    &.no-padding {
+      padding: 0 !important;
+      margin: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      display: block !important;
+    }
+  }
 }
+
 .sidebar {
-  width: 260px;
+  width: 280px;
   background-color: #0f172a;
   color: white;
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: sticky;
   top: 0;
   height: 100vh;
-  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  overflow: hidden;
 
-  .brand {
-    font-size: 1.5rem; font-weight: 800; margin-bottom: 40px; display: flex; align-items: center; gap: 8px;
-    span {
-      color: #10b981; font-size: 0.85rem; background: rgba(16, 185, 129, 0.1);
-      padding: 4px 8px; border-radius: 6px;
-    }
+  .sidebar-header {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
   }
 
-  nav {
-    display: flex; 
+  .brand {
+    .brand-full {
+      font-size: 1.4rem; font-weight: 800; white-space: nowrap;
+      span { color: #10b981; font-size: 0.8rem; margin-left: 4px; }
+    }
+    .brand-mini { display: none; font-weight: 800; color: #10b981; font-size: 1.2rem; }
+  }
+
+  .menu-toggle {
+    background: rgba(255, 255, 255, 0.05);
+    width: 40px;
+    height: 40px;
+    display: flex;
     flex-direction: column;
-    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px;
+    border-radius: 8px;
+    
+    .bar {
+      width: 18px;
+      height: 2px;
+      background: #94a3b8;
+      transition: 0.3s;
+    }
+    &:hover .bar { background: #10b981; }
+  }
+
+  .nav-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 16px;
 
     .nav-item {
       display: flex;
-      align-items: center; 
-      gap: 12px;
-      text-decoration: none; 
-      color: #94a3b8; 
-      padding: 12px 16px; 
-      border-radius: 10px;
-      font-weight: 500; 
-      transition: all 0.3s ease; 
-      cursor: pointer;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 16px;
+      color: #94a3b8;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.2s;
+      white-space: nowrap;
 
-    .icon{
-      font-style: normal;
-      font-size: 1.2rem;
-    }
-      &:hover { 
-        background: rgba(255, 255, 255, 0.05); 
-        color: white; 
-      }
+      .icon { font-style: normal; font-size: 1.2rem; min-width: 24px; text-align: center; }
+      .nav-text { font-weight: 500; }
+
+      &:hover { background: rgba(255, 255, 255, 0.05); color: white; }
       &.active { 
-        background: #10b981;
-       color: white; 
-       box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); 
+        background: #10b981; 
+        color: white; 
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); 
       }
     }
   }
+
+  .sidebar-footer {
+    padding: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    .user-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; margin: 0; }
+    .user-name { font-size: 0.9rem; font-weight: 600; margin: 4px 0 0 0; }
+  }
 }
-.dashboard-main {
-  flex: 1;
-  padding: 48px;
-  max-width: 1200px;
+
+/* COLLAPSED STATE */
+.dashboard-wrapper.collapsed {
+  .sidebar {
+    width: 88px;
+    .sidebar-header { justify-content: center; padding: 24px 0; }
+    .brand-full, .nav-text, .sidebar-footer { display: none; }
+    .brand-mini { display: block; }
+    .nav-list { padding: 0 12px; }
+    .nav-item { justify-content: center; padding: 14px 0; }
+  }
+
+  /* Ensure main expands when sidebar is small */
+  .dashboard-main {
+    max-width: 100%;
+  }
+}
+
+/* Ensure content takes full space */
+router-outlet + * {
+  width: 100%;
+  height: 100%;
 }

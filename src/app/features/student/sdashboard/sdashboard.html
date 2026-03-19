@@ -40,19 +40,18 @@
 
 <div class="course-grid" *ngIf="enrolledCourses.length > 0">
   <div class="course-card" *ngFor="let course of enrolledCourses">
-    <div class="course-info">
-      <h3>{{ course.title }}</h3>
-      <span class="status-tag" [class.complete]="course.progress === 100">
-        {{ course.progress === 100 ? 'Completed' : 'In Progress' }}
-      </span>
-    </div>
-    
+<div class="course-info">
+  <h3>{{ course.title }}</h3>
+  <span class="status-tag" [ngClass]="course.status">
+    {{ course.status === 'approved' ? 'Active' : 'Awaiting Approval' }}
+  </span>
+</div>
     <div class="progress-track">
       <div class="progress-fill" [style.width.%]="course.progress"></div>
     </div>
 
     <div class="card-actions">
-      <button class="btn-resume-small" (click)="goToCourse(course.title)">
+      <button class="btn-resume-small" (click)="goToCourse(course)">
         {{ course.progress > 0 ? 'Resume Study' : 'Start Learning' }}
       </button>
     </div>

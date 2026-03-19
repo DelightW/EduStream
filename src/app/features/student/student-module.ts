@@ -9,12 +9,17 @@ import { StudentLayoutComponent } from './student-layout.component/student-layou
 import { EnrollmentHistory } from './enrollment-history/enrollment-history';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EnrollmentDetails } from './enrollment-details/enrollment-details';
+import { C } from '@angular/cdk/keycodes';
+import { CourseworkComponent } from './coursework/coursework';
+import { CourseViewerComponent } from './course-viewer/course-viewer';
 
 
 @NgModule({
   declarations: [
     StudentLayoutComponent,
     StudentDashboardComponent,
+    CourseworkComponent,
+    CourseViewerComponent,
     EnrollmentHistory,
     EnrollmentDetails,
        

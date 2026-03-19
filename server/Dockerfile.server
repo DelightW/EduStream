@@ -3,10 +3,8 @@ WORKDIR /app
 
 # Step 1: Copy package files from the server folder
 # The context is the root, so we point to ./server/
-COPY ./server/package*.json ./
-RUN npm install --no-audit --no-fund
-
 COPY ./server/ .
+
 
 EXPOSE 5000
 # Run server.js which is now at /app/server.js

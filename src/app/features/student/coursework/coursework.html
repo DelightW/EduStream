@@ -1,24 +1,22 @@
-<div class="hub-container">
-  <header class="hub-header">
-    <h1>My Learning Path</h1>
+<div class="coursework-container">
+  <header class="header-section">
+    <h2>My Learning Path</h2>
     <p>Select an enrolled course below to continue your coursework.</p>
   </header>
 
-  <div class="enrolled-grid">
-    <div class="course-card-mini" *ngFor="let course of enrolledCourses" (click)="openViewer(course.id)">
-      <div class="card-icon">📖</div>
-      <div class="card-details">
-        <h3>{{ course.courseCode }}</h3>
-        <div class="progress-mini">
-          <div class="progress-bar" [style.width.%]="course.progress"></div>
-        </div>
-        <span>{{ course.progress }}% Completed</span>
-      </div>
-      <button class="btn-resume">Resume Study</button>
+  <div class="course-path-grid" *ngIf="enrolledCourses.length > 0">
+    <div class="path-card" *ngFor="let course of enrolledCourses">
+      <div class="course-icon">📖</div>
+      <h3>{{ course.courseCode }}</h3>
+      <p>Continue where you left off in your modules.</p>
+      <button class="btn-continue" (click)="goToCourse(course.courseCode)">
+        Continue Coursework
+      </button>
     </div>
   </div>
 
-  <div class="hub-footer" *ngIf="enrolledCourses.length === 0">
-    <p>You haven't enrolled in any courses yet. Please go to the <strong>Dashboard</strong> to find a course.</p>
+  <div class="empty-state" *ngIf="enrolledCourses.length === 0">
+    <p>You haven't enrolled in any courses yet.</p>
+    <p>Please go to the <a routerLink="/student/sdashboard" class="dashboard-link">Dashboard</a> to find a course.</p>
   </div>
 </div>

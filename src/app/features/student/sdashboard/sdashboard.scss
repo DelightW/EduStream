@@ -73,10 +73,17 @@
 
 /* MODAL & FORM LOGIC (Integrated Fixes) */
 .modal-overlay {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
   background: rgba(15, 23, 42, 0.7); /* Darker slate overlay */
-  display: flex; justify-content: center; align-items: center;
-  z-index: 9999; backdrop-filter: blur(8px);
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  z-index: 9999; 
+  backdrop-filter: blur(8px);
 }
 
 .modal-card {
@@ -148,6 +155,52 @@
   &:hover { background: #e2e8f0; }
 }
 
+.btn-resume-small {
+  background-color: #10b981; 
+  color: white;
+  border: none; 
+  padding: 10px 20px;
+  border-radius: 10px; 
+  cursor: pointer; 
+  font-weight: 500; 
+  transition: background 0.3s;
+  &:hover { background-color: #059669; }
+}
+.status-tag {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  &.pending {
+    background: #fef3c7; // Soft amber
+    color: #92400e;      // Dark amber
+    border: 1px solid #fcd34d;
+  }
+
+  &.approved {
+    background: #dcfce7; // Soft emerald
+    color: #166534;      // Dark emerald
+    border: 1px solid #86efac;
+  }
+  
+  &.complete {
+    background: #eff6ff;
+    color: #1e40af;
+  }
+}
+
+.btn-resume-small {
+  // Styles for the action button
+  &.disabled-btn {
+    background: #f1f5f9;
+    color: #94a3b8;
+    cursor: not-allowed;
+    border: 1px solid #e2e8f0;
+  }
+}
 @keyframes modalAppear {
   from { opacity: 0; transform: translateY(15px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }

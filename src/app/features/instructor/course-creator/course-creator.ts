@@ -34,7 +34,7 @@ export class CourseCreatorComponent implements OnInit {
         ...this.courseForm.value,
         instructor: this.apiService.getUser() 
       };
-      this.apiService.addCourse(newCourse); 
+      this.apiService.saveInstructorCourse(newCourse).subscribe();
     }
   }
 }

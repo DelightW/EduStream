@@ -12,18 +12,12 @@ import { finalize } from 'rxjs';
   styleUrls: ['./enrollment-history.scss'],
   standalone: false,
 })
-
-  export class EnrollmentHistory implements OnInit {
-  editingId: number | null = null;
+export class EnrollmentHistory implements OnInit {
+  editingId: string | null = null; // Changed to string to match MongoDB IDs
   history: any[] = [];
   showEnrollModal: boolean = false;
   enrollForm!: FormGroup;
 
-   enrolledCourses = [
-    { title: 'Intro to Web Design', progress: 100 },
-    { title: 'Advanced Angular', progress: 35 },
-    { title: 'Database Basics', progress: 0 }
-  ];
   constructor(
     private alertService: AlertService,
     private fb: FormBuilder,
@@ -36,94 +30,92 @@ import { finalize } from 'rxjs';
     this.loadHistory();
 
     this.enrollForm = this.fb.group({
-      courseCode: ['', [Validators.required, Validators.minLength(1)]],
+      courseCode: ['', [Validators.required]],
       studentEmail: ['', [Validators.required, Validators.email]],
+      instructorName: ['', [Validators.required]], // Ensure instructor is included
       reason: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
-    loadHistory(){
-      const currentUser = this.apiService.getUser();
 
-     this.apiService.getEnrollmentHistoryByUser(currentUser).subscribe((data)=> {
-        this.history = [...data];
-     });
-    }
+  loadHistory(){
+    const currentUser = this.apiService.getUser();
+    this.apiService.getEnrolledCourses(currentUser).subscribe({
+      next: (data: any[]) => this.history = [...data],
+      error: (err: any) => console.error('History load failed', err)
+    });
+  }
 
-    editEnrollment(item: any) {
-    this.editingId = item.id; 
+  editEnrollment(item: any) {
+    this.editingId = item._id || item.id; 
     this.showEnrollModal = true;
-    
     this.enrollForm.patchValue({
       courseCode: item.courseCode,
       studentEmail: item.studentEmail,
-      reason: item.reason,
-  });
-
-  this.enrollForm.markAllAsTouched();
-  this.enrollForm.updateValueAndValidity();
+      instructorName: item.instructorName,
+      reason: item.reason || ''
+    });
   }
 
   deleteEnrollment(id: any) {
-  this.alertService.confirm('Delete Enrollment', 'Are you sure?').then((confirmed: boolean) => {
-    if (confirmed) {
-      this.loaderService.show();
-      this.apiService.deleteEnrollment(id)
-        .pipe(finalize(() => this.loaderService.hide()))
-        .subscribe({
-          next: () => {
-            this.loadHistory(); 
-            this.alertService.success('Deleted', 'Enrollment removed.');
-          },
-          error: () => this.loadHistory() 
-        });
-    }
-  });
-}
-  viewEnrollment(id: any) {
+    this.alertService.confirm('Delete Enrollment', 'Are you sure?').then((confirmed: boolean) => {
+      if (confirmed) {
+        this.loaderService.show();
+        this.apiService.deleteEnrollment(id)
+          .pipe(finalize(() => this.loaderService.hide()))
+          .subscribe({
+            next: () => {
+              this.loadHistory(); 
+              this.alertService.success('Deleted', 'Enrollment removed.');
+            },
+            error: (err: any) => {
+              console.error('Delete failed', err);
+              this.loadHistory(); 
+            }
+          });
+      }
+    });
+  }
 
+  viewEnrollment(id: any) {
     this.router.navigate(['/student/enrollment-details', id]);
   }
 
-    closeModal() {
+  closeModal() {
     this.showEnrollModal = false;
     this.editingId = null;
     this.enrollForm.reset();
-    
   }
 
-onEnroll() {
-  if (this.enrollForm.invalid) {
-    return this.alertService.error('Invalid Form', 'Please fill out all fields correctly.');
-  }
+  onEnroll() {
+    if (this.enrollForm.invalid) {
+      return this.alertService.error('Invalid Form', 'Please fill out all fields correctly.');
+    }
 
-  this.loaderService.show(); 
+    this.loaderService.show(); 
+    const formData = {
+      ...this.enrollForm.value,
+      username: this.apiService.getUser()
+    };
 
-  const formData = {
-    ...this.enrollForm.value,
-    username: this.apiService.getUser()
-  };
-
-  this.apiService.enrollInCoursePutPost(formData, this.editingId)
-    .pipe(
+    // Updated to use requestEnrollment instead of PutPost
+    this.apiService.requestEnrollment(formData).pipe(
       finalize(() => {
         this.loaderService.hide();
         this.closeModal(); 
       })
-    )
-    .subscribe({
+    ).subscribe({
       next: () => {
         this.loadHistory(); 
-        const message = this.editingId ? 'Enrollment Updated' : 'Enrollment Requested';
-        this.alertService.success('Success!', message);
+        this.alertService.success('Success!', 'Enrollment Requested');
       },
-      error: () => {
-        this.loadHistory(); 
+      error: (err: any) => {
+        this.loadHistory();
+        this.alertService.error('Error', err.error?.error || 'Request failed');
       }
     });
-}
+  }
+
   trackById(index: number, item: any) {
-  return item.id; 
-}
-
-
+    return item._id || item.id; 
+  }
 }

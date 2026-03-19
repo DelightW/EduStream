@@ -1,19 +1,43 @@
-<div class="dashboard-wrapper">
+<div class="dashboard-wrapper" [class.collapsed]="isSidebarCollapsed">
+  
   <aside class="sidebar">
-    <div class="brand">EduStream <br><span>Student</span></div>
-    <nav>
-      <a routerLink="/student/sdashboard" routerLinkActive="active" class="nav-item">
-      <i class="icon">🏠</i> <span>My Learning</span></a>
-            <a routerLink="/student/coursework" routerLinkActive="active" class="nav-item">
-        <i class="icon">📖</i><span>Coursework</span></a>
-      <a routerLink="/student/enrollment-details" routerLinkActive="active" class="nav-item">
-        <i class="icon">📚</i><span>Enrollment Details</span></a>
-      <a routerLink="/student/enrollment-history" routerLinkActive="active" class="nav-item">
-        <i class="icon">📔</i><span>Enrollment History</span></a>
+    <div class="sidebar-header">
+      <div class="brand">
+        <span class="brand-full">EduStream <span>Student</span></span>
+        <span class="brand-mini">ES</span>
+      </div>
+      <button class="menu-toggle" (click)="toggleSidebar()">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+    
+    <nav class="nav-list">
+      <a routerLink="/student/sdashboard" routerLinkActive="active" class="nav-item" title="My Learning">
+        <i class="icon">🏠</i> 
+        <span class="nav-text">My Learning</span>
+      </a>
+      <a routerLink="/student/coursework" routerLinkActive="active" class="nav-item" title="Coursework">
+        <i class="icon">📖</i> 
+        <span class="nav-text">Coursework</span>
+      </a>
+      <a routerLink="/student/enrollment-details" routerLinkActive="active" class="nav-item" title="Enrollments">
+        <i class="icon">📚</i> 
+        <span class="nav-text">Enrollment Details</span>
+      </a>
+      <a routerLink="/student/enrollment-history" routerLinkActive="active" class="nav-item" title="History">
+        <i class="icon">📔</i> 
+        <span class="nav-text">Enrollment History</span>
+      </a>
     </nav>
+
+    <div class="sidebar-footer" *ngIf="!isSidebarCollapsed">
+      <p class="user-label">Logged in as</p>
+      <p class="user-name">{{ studentName }}</p>
+    </div>
   </aside>
 
-  <main class="dashboard-main">
+<main class="dashboard-main" [class.no-padding]="isCourseViewer">
   <router-outlet></router-outlet>
-  </main>
-  </div>
+</main>
