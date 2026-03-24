@@ -1,0 +1,150 @@
+.roster-container {
+  padding: 30px;
+  background: transparent;
+
+  .roster-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    h2 { font-size: 1.8rem; font-weight: 800; color: #1e293b; margin: 0; }
+    p { color: #64748b; margin-top: 5px; }
+    .total-badge { background: #f1f5f9; padding: 6px 12px; border-radius: 8px; font-weight: 700; color: #475569; }
+  }
+}
+
+.table-wrapper {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.roster-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    background: #f8fafc;
+    padding: 18px 20px;
+    text-align: left;
+    color: #94a3b8;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  td { padding: 16px 20px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+
+  /* FIX FOR THE "WW" ISSUE */
+  .student-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Creates space between Avatar and Name */
+
+    .avatar-circle {
+      width: 40px;
+      height: 40px;
+      background: #10b981;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .student-info {
+      display: flex;
+      flex-direction: column;
+      .student-name { font-weight: 700; color: #1e293b; font-size: 0.95rem; }
+      .student-email { font-size: 0.8rem; color: #94a3b8; }
+    }
+  }
+
+  .code-badge {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-weight: 700;
+  }
+
+  .status-pill {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    &.approved { background: #dcfce7; color: #166534; }
+    &.pending { background: #fef3c7; color: #92400e; }
+  }
+
+  .progress-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .mini-progress-bar {
+      width: 80px; height: 6px; background: #f1f5f9; border-radius: 10px; overflow: hidden;
+      .fill { height: 100%; background: #10b981; transition: 0.3s; }
+    }
+    .progress-text { font-size: 0.75rem; font-weight: 700; color: #64748b; }
+  }
+
+  .btn-approve {
+    background: #10b981; color: white; border: none; padding: 8px 16px;
+    border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 0.8rem;
+    transition: 0.2s;
+    &:hover { background: #059669; transform: translateY(-1px); }
+  }
+
+  .text-active {
+    color: #10b981; font-weight: 700; font-size: 0.85rem;
+    .check-icon { margin-left: 5px; }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px;
+  color: #94a3b8;
+  .empty-icon { font-size: 3rem; margin-bottom: 15px; }
+}
+/* Keep all your existing .roster-container and .roster-table styles here */
+/* ... existing styles ... */
+
+.loading-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+  color: #94a3b8;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+
+  .spinner-dot {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f1f5f9;
+    border-top: 4px solid #10b981;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Ensure these are in your file too: */
+.status-pill.approved { background: #dcfce7; color: #166534; }
+.status-pill.pending { background: #fef3c7; color: #92400e; }

@@ -44,7 +44,8 @@ export class StudentDashboardComponent implements OnInit {
             this.selectedSchool = pref.schoolName;
             sessionStorage.setItem(`${savedName}_userSchool`, pref.schoolName);
           }
-        }
+        },
+        error: (err) => console.error('DB sync failed:', err)
       });
 
       this.loadUserCourses(savedName);
@@ -69,13 +70,17 @@ this.enrollForm = this.fb.group({
     });
   }
 
-  goToCourse(course: any) {
-    if (course.status === 'approved') {
-      this.router.navigate(['/student/course-viewer', course.courseCode]);
-    } else {
-      this.alertService.error('Access Denied', 'Waiting for Instructor approval.');
-    }
+goToCourse(course: any) {
+  if (course.status === 'approved') {
+    this.loaderService.show();
+    setTimeout(() => {
+      this.router.navigate(['/student/course-viewer', course.courseCode])
+        .then(() => this.loaderService.hide());
+    }, 500);
+  } else {
+    this.alertService.error('Access Denied', 'Waiting for Instructor approval.');
   }
+}
 
 onEnroll() {
   if (this.enrollForm.valid) {

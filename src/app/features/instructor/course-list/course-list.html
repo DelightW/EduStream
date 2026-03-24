@@ -12,26 +12,24 @@
 
   <p class="section-desc">View and manage your weekly modules, resources, and student enrollments below.</p>
 
-<div class="stats-row compact">
-  <div class="lms-card-small">
-    <h3>📊 Active Enrollments</h3>
-    <p class="stat-value black-text">{{ activeStudents.length }}</p>
-    <button class="btn-roster" (click)="viewRoster()">View Students</button>
-  </div>
-
-  <div class="lms-card-small">
-    <h3>👋 Pending Approvals</h3>
-    <p class="stat-value black-text">{{ pendingStudents.length }}</p>
-    
-    <div class="quick-actions" *ngIf="pendingStudents.length > 0">
-      <button class="btn-approve-mini" (click)="approveStudent(pendingStudents[0])">
-        Approve {{ pendingStudents[0].username }}
-      </button>
+  <div class="stats-row compact">
+    <div class="lms-card-small">
+      <h3>📊 Active Enrollments</h3>
+      <p class="stat-value black-text">{{ activeStudents.length }}</p>
+      <button class="btn-roster" (click)="viewRoster()">View Students</button>
     </div>
-    
-    <p class="empty-msg-mini" *ngIf="pendingStudents.length === 0">No pending requests</p>
+
+    <div class="lms-card-small">
+      <h3>👋 Pending Approvals</h3>
+      <p class="stat-value black-text">{{ pendingStudents.length }}</p>
+      <div class="quick-actions" *ngIf="pendingStudents.length > 0">
+        <button class="btn-approve-mini" (click)="approveStudent(pendingStudents[0])">
+          Approve {{ pendingStudents[0].username }}
+        </button>
+      </div>
+      <p class="empty-msg-mini" *ngIf="pendingStudents.length === 0">No pending requests</p>
+    </div>
   </div>
-</div>
 
   <div class="modules-stack">
     <div class="weekly-module-full" *ngFor="let week of weeks">
@@ -52,22 +50,24 @@
       </div>
 
       <div class="module-body">
-        <div class="content-list" *ngIf="moduleContent[week.toString()]">
-          <div class="note-item" *ngFor="let note of moduleContent[week.toString()].notes">
-            <p>{{ note }}</p>
+        <div class="content-list" *ngIf="course?.weeks[week-1]">
+          <div class="note-item" *ngFor="let mod of course.weeks[week-1].modules">
+            <h4 class="module-preview-title">{{ mod.title }}</h4>
+            <p class="module-preview-text">{{ mod.content }}</p>
           </div>
 
-      <div class="file-item clickable" 
-          *ngFor="let file of course?.weeks[week-1]?.resources" 
-          (click)="downloadFile(file)">
-        <div class="file-icon">📄</div>
-        <div class="file-details">
-          <p class="file-name">{{ file.fileName || file.name }}</p>
-          <span class="download-hint">Click to download</span>
+          <div class="file-item clickable" 
+               *ngFor="let file of course.weeks[week-1].resources" 
+               (click)="downloadFile(file)">
+            <div class="file-icon">📄</div>
+            <div class="file-details">
+              <p class="file-name">{{ file.fileName || file.name }}</p>
+              <span class="download-hint">Click to download</span>
+            </div>
+          </div>
         </div>
-      </div>
 
-        <p class="empty-msg" *ngIf="!moduleContent[week.toString()] || (moduleContent[week.toString()].notes.length === 0 && moduleContent[week.toString()].files.length === 0)">
+        <p class="empty-msg" *ngIf="!course?.weeks[week-1] || (course.weeks[week-1].modules.length === 0 && course.weeks[week-1].resources.length === 0)">
           No resources uploaded for this week.
         </p>
       </div>

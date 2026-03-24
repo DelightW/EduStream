@@ -1,0 +1,76 @@
+<div class="roster-container">
+  <header class="roster-header">
+    <div class="header-content">
+      <h2>Student Management Roster</h2>
+      <p>Manage access and track progress for all students enrolled in your courses.</p>
+    </div>
+    <div class="header-stats">
+      <span class="total-badge" *ngIf="!(loaderService.isLoading | async)">
+        {{ students.length }} Total Students
+      </span>
+    </div>
+  </header>
+
+  <div class="loading-placeholder" *ngIf="loaderService.isLoading | async">
+    <div class="spinner-dot"></div>
+    <p>Syncing Roster...</p>
+  </div>
+
+  <div class="table-wrapper" *ngIf="!(loaderService.isLoading | async)">
+    <table class="roster-table" *ngIf="students.length > 0">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Course Code</th>
+          <th>Status</th>
+          <th>Progress</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of students">
+          <td>
+            <div class="student-profile">
+              <div class="avatar-circle">
+                {{ s.username?.[0] | uppercase }}
+              </div>
+              <div class="student-info">
+                <span class="student-name">{{ s.username }}</span>
+                <span class="student-email">{{ s.studentEmail || 'No email provided' }}</span>
+              </div>
+            </div>
+          </td>
+          <td><span class="code-badge">{{ s.courseCode }}</span></td>
+          <td>
+            <span class="status-pill" [ngClass]="s.status">
+              {{ s.status }}
+            </span>
+          </td>
+          <td>
+            <div class="progress-container">
+              <div class="mini-progress-bar">
+                <div class="fill" [style.width.%]="s.progress"></div>
+              </div>
+              <span class="progress-text">{{ s.progress }}%</span>
+            </div>
+          </td>
+          <td>
+            <div class="action-cell">
+              <button *ngIf="s.status === 'pending'" class="btn-approve" (click)="approve(s)">
+                Approve Access
+              </button>
+              <span *ngIf="s.status === 'approved'" class="text-active">
+                Active <span class="check-icon">✓</span>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="empty-state" *ngIf="students.length === 0">
+      <div class="empty-icon">👥</div>
+      <p>No students have enrolled in your courses yet.</p>
+    </div>
+  </div>
+</div>

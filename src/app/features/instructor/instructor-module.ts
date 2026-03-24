@@ -8,6 +8,7 @@ import { CourseCreatorComponent } from './course-creator/course-creator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InstructorLayoutComponent } from './instructor-layout.component/instructor-layout.component';
 import { CourseCatalogComponent } from './course-catalog/course-catalog';
+import { StudentListComponent } from './student-list/student-list';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { CourseCatalogComponent } from './course-catalog/course-catalog';
     InstructorDashboardComponent,
     CourseListComponent,
     CourseCreatorComponent,
-    CourseCatalogComponent
+    CourseCatalogComponent,
+    StudentListComponent
   ],
   imports: [
     CommonModule,

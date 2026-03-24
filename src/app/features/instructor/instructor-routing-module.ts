@@ -5,6 +5,7 @@ import { CourseListComponent } from './course-list/course-list';
 import { CourseCreatorComponent } from './course-creator/course-creator';
 import { InstructorLayoutComponent } from './instructor-layout.component/instructor-layout.component'; 
 import { CourseCatalogComponent } from './course-catalog/course-catalog';
+import { StudentListComponent } from './student-list/student-list';
 const routes: Routes = [
   {
     path: '',
@@ -14,6 +15,7 @@ const routes: Routes = [
       { path: 'my-courses', component: CourseCatalogComponent},
       { path: 'view-course/:id', component: CourseListComponent },
       { path: 'create-course', component: CourseCreatorComponent },
+      { path: 'student-list', component: StudentListComponent },
       {path: '', redirectTo: 'dashboard', pathMatch: 'full' }
   ] } 
 ];

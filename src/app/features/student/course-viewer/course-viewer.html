@@ -1,45 +1,98 @@
 <div class="viewer-layout" [class.dark-mode]="isDarkMode">
   <header class="top-bar">
-<div class="bar-left">
-  <button class="btn-close" (click)="closeViewer()">X</button>
-  <span class="course-title-top">{{ currentCourse?.title }}</span>
-</div>
+    <div class="bar-left">
+      <button class="btn-back" (click)="closeViewer()">Back to Coursework</button>
+      <div class="divider"></div>
+      <span class="course-title-top">{{ currentCourse?.title }}</span>
+    </div>
+
     <div class="bar-right">
-      <select class="lang-dropdown">
-        <option value="">Select Language</option>
-        <option *ngFor="let lang of languages" [value]="lang">{{ lang }}</option>
-      </select>
-      <button class="btn-mode" (click)="toggleDarkMode()">
-        {{ isDarkMode ? '☀️' : '🌙' }}
+      <div class="custom-select-wrapper">
+        <select class="lang-dropdown">
+          <option value="">Select Language</option>
+          <option *ngFor="let lang of languages" [value]="lang">{{ lang }}</option>
+        </select>
+      </div>
+      <button class="btn-mode-toggle" [class.active-dark]="isDarkMode" (click)="toggleDarkMode()">
+        <div class="toggle-track">
+          <span class="toggle-thumb">{{ isDarkMode ? '🌙' : '☀️' }}</span>
+        </div>
       </button>
     </div>
   </header>
 
-  <div class="viewer-main">
-    <aside class="viewer-sidebar">
+  <div class="viewer-loading-state" *ngIf="loaderService.isLoading | async">
+    <div class="spinner-dot"></div>
+    <p>Loading Course Material...</p>
+  </div>
+
+  <div class="viewer-main" *ngIf="!(loaderService.isLoading | async)">
+    <aside class="viewer-sidebar" [class.closed]="isSidebarClosed">
       <div class="tabs">
         <button [class.active]="activeTab === 'outline'" (click)="activeTab = 'outline'">Outline</button>
         <button [class.active]="activeTab === 'resources'" (click)="activeTab = 'resources'">Resources</button>
       </div>
-      <ul class="topic-list" *ngIf="activeTab === 'outline'">
-        <li *ngFor="let topic of topics" 
-            [class.active]="currentTopic === topic.id"
-            (click)="loadTopic(topic.id)">
-          <span class="status-dot" [class.done]="topic.completed"></span>
-          <span class="topic-title">{{ topic.title }}</span>
-        </li>
-      </ul>
+
+      <div class="sidebar-content" *ngIf="activeTab === 'outline'">
+        <div class="week-group" *ngFor="let week of currentCourse?.weeks">
+          <div class="week-header" (click)="toggleWeek(week.weekNumber)">
+            <span class="arrow" [class.rotated]="openWeeks[week.weekNumber]">▸</span>
+            <span class="week-label">Week {{ week.weekNumber }}</span>
+          </div>
+
+          <ul class="topic-list" *ngIf="openWeeks[week.weekNumber]">
+            <li *ngFor="let mod of week.modules; let i = index" 
+                [class.active]="currentTopic === mod.id"
+                [class.completed]="isTopicCompleted(mod.id)"
+                (click)="loadTopic(mod.id)">
+              
+              <div class="stepper-track">
+                <div class="step-dot">
+                  <span class="check" *ngIf="isTopicCompleted(mod.id)">✓</span>
+                </div>
+                <div class="line"></div>
+              </div>
+              
+              <div class="topic-meta">
+                <span class="topic-title">{{ mod.title }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-content" *ngIf="activeTab === 'resources'">
+        <div class="resource-list">
+          <div class="resource-item" *ngFor="let file of resources" (click)="downloadResource(file)">
+            <div class="file-row">
+              <span class="file-icon">📁</span>
+              <span class="file-name">{{ file.fileName }}</span>
+            </div>
+            <span class="download-label">Click to download</span>
+          </div>
+        </div>
+      </div>
     </aside>
 
     <section class="viewer-content">
-      <div class="content-body">
-        <h1>{{ getActiveTopic().title }}</h1>
-        <div class="inner-html" [innerHTML]="getActiveTopic().content"></div>
+      <div class="content-controls">
+        <button class="btn-sidebar-toggle" (click)="toggleSidebar()">
+          <span class="toggle-icon">≡</span>
+        </button>
+      </div>
+
+      <div class="content-body" *ngIf="getActiveTopic()?.title">
+        <div class="cisco-header">
+          <span class="module-id">WEEK {{ getActiveTopic().weekNumber || '1' }}</span>
+          <h1>{{ getActiveTopic().title }}</h1>
+        </div>
+        <hr class="header-divider">
+        <div class="inner-html">{{ getActiveTopic().content }}</div>
       </div>
 
       <footer class="footer-nav">
         <button class="nav-btn" (click)="prevTopic()" [disabled]="isFirstTopic()">Previous</button>
-        <button class="nav-btn primary" (click)="nextTopic()" [disabled]="isLastTopic()">Next</button>
+        <button class="nav-btn primary" (click)="nextTopic()" [disabled]="isLastTopic()">Next Topic</button>
       </footer>
     </section>
   </div>

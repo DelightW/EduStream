@@ -107,26 +107,44 @@ async addNote(week: any) {
   const weekKey = week.toString();
   const courseCode = this.course.courseCode;
 
-  const { value: note } = await Swal.fire({
-    title: `Add Note for Week ${weekKey}`,
-    input: 'textarea',
-    inputPlaceholder: 'Type your module notes here...',
+  const { value: formValues } = await Swal.fire({
+    title: `Add Module for Week ${weekKey}`, 
+    width: '800px',
+    html: `
+      <div style="text-align: left;">
+        <label style="font-weight: bold; display: block; margin-bottom: 5px; color: #1e293b;">Module Title</label>
+        <input id="swal-title" class="swal2-input" placeholder="e.g., 1.1.1 Introduction" style="width: 90%; margin-bottom: 20px;">
+        
+        <label style="font-weight: bold; display: block; margin-bottom: 5px; color: #1e293b;">Module Content</label>
+        <textarea id="swal-content" class="swal2-textarea" placeholder="Type your detailed notes here..." style="height: 300px; width: 90%; font-family: 'Inter', sans-serif;"></textarea>
+      </div>
+    `,
+    focusConfirm: false,
     showCancelButton: true,
     confirmButtonColor: '#10b981',
+    confirmButtonText: 'Publish Module',
+    preConfirm: () => {
+      const title = (document.getElementById('swal-title') as HTMLInputElement).value;
+      const content = (document.getElementById('swal-content') as HTMLTextAreaElement).value;
+      if (!title || !content) {
+        Swal.showValidationMessage('Both title and content are required');
+      }
+      return { title, content };
+    }
   });
 
-  if (note) {
-    this.loaderService.show(); // isLoading triggers on the button now
+  if (formValues) {
+    this.loaderService.show();
     
-    // NEW: Save to MongoDB
-    this.apiService.addModuleText(courseCode, week, note).pipe(
+    // Using the courseCode variable here
+    this.apiService.addModuleText(courseCode, week, formValues).pipe(
       finalize(() => this.loaderService.hide())
     ).subscribe({
       next: () => {
-        this.alertService.toast(`Saved to MongoDB`, 'success');
-        this.loadCourseData(courseCode); // Reload to show the new note from DB
+        this.alertService.toast(`Module published to Week ${weekKey}`, 'success');
+        this.loadCourseData(courseCode); 
       },
-      error: () => this.alertService.error('Error', 'Failed to persist note')
+      error: () => this.alertService.error('Error', 'Failed to save module')
     });
   }
 }
@@ -173,7 +191,7 @@ approveStudent(student: any) {
     });
   }
 }
-    viewRoster() { this.router.navigate(['/instructor/students']); }
+    viewRoster() { this.router.navigate(['/instructor/student-list']); }
     approveAll() { this.alertService.success('Approved!', 'All students accepted.'); this.pendingStudents = []; }
     declineAll() { this.alertService.error('Declined', 'Requests rejected.'); this.pendingStudents = []; }
   }

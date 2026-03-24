@@ -18,7 +18,6 @@
       <tr style="text-align: left; border-bottom: 2px solid #eee;">
         <th>Course</th>
         <th>Email</th>
-        <th>Reason</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -26,7 +25,6 @@
       <tr *ngFor="let item of history; trackBy: trackById" style="border-bottom: 1px solid #eee;">
         <td>{{ item.courseCode }}</td>
         <td>{{ item.studentEmail }}</td>
-        <td>{{ item.reason }}</td>
         <td class="action-group">
           <button class="btn-edit" (click)="editEnrollment(item)" style="padding: 5px 10px; cursor: pointer;">
             ✏️ Edit

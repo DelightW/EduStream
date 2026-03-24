@@ -1,131 +1,360 @@
+/* 1. Root Layout & Global Dark Mode */
 .viewer-layout {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  /* Use width 100% and let the parent flexbox handle the positioning */
-  width: 100%; 
+  width: 100%;
   overflow: hidden;
   background: #ffffff;
+  font-family: 'Inter', sans-serif;
   transition: background 0.3s ease;
 
   &.dark-mode {
-    background: #0f172a !important;
-    color: #e2e8f0;
-    .top-bar { background: #1e293b; border-color: #334155; }
-    .viewer-sidebar { background: #1e293b; border-right-color: #334155; }
-    .footer-nav { background: #1e293b; border-top-color: #334155; }
-    .topic-list li.active { background: #334155; color: #10b981; }
-    h1 { color: white; }
+    background: #0f172a;
+    color: #f8fafc;
+    .top-bar, .viewer-sidebar, .footer-nav, .content-controls { 
+      background: #1e293b; 
+      border-color: #334155; 
+    }
+    .tabs button { 
+      background: #334155; 
+      color: #94a3b8; 
+      &.active { background: #10b981; color: white; } 
+    }
+    .week-header { 
+      background: #1e293b; 
+      border-color: #334155;
+      .week-label { color: white; } 
+    }
+    .topic-list li {
+       border-bottom-color: #334155;
+       &.active { background: #0f172a; }
+    }
+    .btn-sidebar-toggle { 
+      background: #334155 !important; 
+      border-color: #475569 !important; 
+      .toggle-icon { color: white !important; } 
+    }
+    .lang-dropdown {
+      background-color: #334155;
+      border-color: #475569;
+      color: #f8fafc;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m19 9-7 7-7-7'/%3E%3C/svg%3E");
+      option { background-color: #1e293b; color: white; }
+    }
+    .resource-item:hover { background: #334155 !important; }
   }
 }
 
-/* Remove the margin-left from the previous version */
-:host-context(.dashboard-wrapper:not(.collapsed)) .viewer-layout,
-:host-context(.dashboard-wrapper.collapsed) .viewer-layout {
-  margin-left: 0 !important;
-  width: 100% !important;
-}
-
+/* 2. Top Bar & Language Dropdown */
 .top-bar {
-  height: 60px;
+  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 24px;
   border-bottom: 1px solid #e2e8f0;
-  
-  .bar-left { display: flex; align-items: center; gap: 15px; }
-  .btn-close { 
-    background: #f1f5f9; 
-    border: none; 
-    font-size: 0.8rem; 
-    cursor: pointer; 
-    width: 20px; height: 20px; 
-    border-radius: 4px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    &:hover { background: #e2e8f0; }
-  }
-  .course-title-top { font-weight: 700; color: inherit; }
-}
-
-.viewer-main {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-  height: calc(100vh - 60px);
-}
-
-.viewer-sidebar {
-  width: 300px;
-  border-right: 1px solid #e2e8f0;
-  display: flex;
-  flex-direction: column;
   flex-shrink: 0;
-  
-  .tabs {
-    display: flex; padding: 15px; gap: 8px;
-    button { 
-      flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer;
-      background: #f1f5f9; font-weight: 600; color: #64748b;
-      transition: 0.2s;
-      &.active { background: #10b981; color: white; }
+
+  .bar-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    .btn-back {
+      background: transparent;
+      border: 1px solid #e2e8f0;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      color: #64748b;
+      cursor: pointer;
+      &:hover { background: #f8fafc; color: #10b981; border-color: #10b981; }
+    }
+    .divider { height: 24px; width: 1px; background: #e2e8f0; }
+    .course-title-top { font-weight: 700; color: #1e293b; }
+  }
+
+  .bar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    .lang-dropdown {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 8px 35px 8px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #475569;
+      outline: none;
+      cursor: pointer;
+      width: 160px;
+      appearance: none; 
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m19 9-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 14px;
+      transition: all 0.2s;
+      &:hover { border-color: #cbd5e1; background-color: #e2e8f0; }
     }
   }
 }
 
-.topic-list {
-  list-style: none; padding: 0; overflow-y: auto;
-  li {
-    padding: 18px 25px; border-bottom: 1px solid #f1f5f9; cursor: pointer;
-    display: flex; align-items: center; gap: 12px;
-    transition: 0.2s;
-    &:hover { background: #f8fafc; }
-    &.active { border-left: 4px solid #10b981; background: #f0fdf4; font-weight: 600; }
+/* 3. Sidebar & Toggle Logic */
+.viewer-main { display: flex; flex: 1; overflow: hidden; }
+
+.viewer-sidebar {
+  width: 320px;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+
+  &.closed {
+    width: 0;
+    border: none;
+    opacity: 0;
+  }
+
+  .tabs {
+    display: flex;
+    padding: 15px;
+    gap: 8px;
+    button {
+      flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer;
+      background: #f1f5f9; font-weight: 700; color: #64748b;
+      &.active { background: #10b981; color: white; }
+    }
+  }
+  .sidebar-content { flex: 1; overflow-y: auto; }
+}
+
+/* RESTORED RESOURCE TAB STYLING */
+.resource-list {
+  padding: 12px;
+  .resource-item {
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+
+    .file-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .file-icon { font-size: 1.2rem; }
+      .file-name { font-weight: 600; font-size: 0.9rem; color: inherit; }
+    }
+
+    .download-label {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      margin-left: 28px;
+      margin-top: 2px;
+    }
+
+    &:hover {
+      background: #f1f5f9;
+      border-color: #e2e8f0;
+      .file-name { color: #10b981; }
+    }
   }
 }
 
+/* 4. Content Area & Cisco Styling */
 .viewer-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: transparent;
   overflow-y: auto;
-  
-  .content-body {
-    padding: 60px 10%;
-    max-width: 900px;
-    margin: 0 auto;
-    flex: 1;
-    width: 100%;
-    h1 { font-size: 2.8rem; margin-bottom: 25px; font-weight: 800; }
-    .inner-html { font-size: 1.2rem; line-height: 1.8; color: inherit; }
+
+  .content-controls {
+    padding: 8px 15px;
+    border-bottom: 1px solid #e2e8f0;
+    background: white;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    .btn-sidebar-toggle {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 4px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      .toggle-icon { font-size: 1.4rem; color: #1e293b; line-height: 1; }
+      &:hover { background: #e2e8f0; }
+    }
   }
-}
 
-.footer-nav {
-  padding: 25px 50px;
-  display: flex;
-  justify-content: space-between;
-  background: #f8fafc;
-  border-top: 1px solid #e2e8f0;
-
-  .nav-btn {
-    padding: 12px 28px; border-radius: 12px; border: 1px solid #cbd5e1;
-    background: white; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px;
-    transition: 0.2s;
-    &:disabled { opacity: 0.4; cursor: not-allowed; }
-    &:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    &.primary { 
-      background: #10b981; color: white; border: none; 
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  .content-body {
+    padding: 40px 5% 40px 40px;
+    max-width: 1100px;
+    width: 100%;
+    .cisco-header {
+      .module-id { color: #10b981; font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+      h1 { font-size: 2.8rem; font-weight: 800; color: #1a1a1a; margin-top: 10px; line-height: 1.2; }
+    }
+    .header-divider { border: 0; height: 1px; background: #e2e8f0; margin: 25px 0; }
+    .inner-html {
+      font-size: 1.1rem;
+      line-height: 1.75;
+      color: #334155;
+      white-space: pre-wrap;
     }
   }
 }
 
-.lang-dropdown {
-  background: #f1f5f9; border: 1px solid #e2e8f0; padding: 8px 15px;
-  border-radius: 8px; font-size: 0.9rem; color: #475569; outline: none;
-  width: 180px;
+/* 5. Week/Topic Headers */
+.week-header {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  background: #f8fafc;
+  cursor: pointer;
+  border-bottom: 1px solid #e2e8f0;
+  .arrow { transition: transform 0.2s; margin-right: 10px; color: #10b981; &.rotated { transform: rotate(90deg); } }
+  .week-label { font-weight: 700; font-size: 0.9rem; }
+}
+
+
+.topic-list li {
+  position: relative;
+  display: flex; 
+  align-items: flex-start;
+  gap: 15px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #f1f5f9; 
+  cursor: pointer; 
+  transition: 0.2s;
+
+  &.active {
+    background: #f0fdf4;
+    border-left: 4px solid #10b981;
+    .topic-title { color: #10b981; font-weight: 700; }
+    .step-dot { border-color: #10b981; background: white; }
+  }
+  &.completed {
+    .step-dot { 
+      background: #10b981 !important; 
+      border-color: #10b981 !important; 
+      color: white !important; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    .check{
+      font-size: 0.4rem;
+      line-height: 1;
+      margin:0;
+      padding: 0;
+      font-weight: bold;
+    }
+  }
+    .topic-title { color: #1e293b; font-weight: 500; }
+  }
+
+  .stepper-track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 20px; // Narrower track
+    margin-top: 4px;
+
+    .step-dot {
+      width: 18px; // Smaller dots like Cisco
+      height: 18px;
+      border-radius: 50%;
+      background: transparent; // Hollow look
+      border: 2px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: 0.3s;
+    }
+
+    .line { display: none !important;
+    }
+  }
+    .topic-meta {
+    .topic-title { 
+      font-size: 0.95rem; 
+      line-height: 1.4; 
+      color: #334155;
+    }
+  }
+}
+
+
+
+.viewer-loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 64px); // Screen height minus top-bar
+  background: white;
+  color: #64748b;
+
+  .spinner-dot {
+    width: 45px;
+    height: 45px;
+    border: 4px solid #f1f5f9;
+    border-top: 4px solid #10b981;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+  }
+}
+
+
+.dark-mode .viewer-loading-state {
+  background: #0f172a;
+  color: #94a3b8;
+  .spinner-dot { border-color: #1e293b; border-top-color: #10b981; }
+}
+
+.footer-nav {
+  padding: 20px 40px; display: flex; justify-content: space-between; border-top: 1px solid #e2e8f0;
+  .nav-btn {
+    padding: 12px 28px; border-radius: 10px; border: 1px solid #e2e8f0; font-weight: 700; cursor: pointer;
+    &.primary { background: #10b981; color: white; border: none; &:hover { background: #059669; } }
+  }
+}
+
+.btn-mode-toggle {
+  background: #f1f5f9;
+  border: none;
+  padding: 4px;
+  border-radius: 20px;
+  width: 52px;
+  height: 28px;
+  cursor: pointer;
+  position: relative;
+  .toggle-thumb {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+  }
+  &.active-dark {
+    background: #475569;
+    .toggle-thumb { transform: translateX(24px); }
+  }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

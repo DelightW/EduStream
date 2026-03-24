@@ -143,7 +143,24 @@ $error-red: #ef4444;
       }
     }
   }
+.module-preview-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 5px;
+}
 
+.module-preview-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Legacy support for Chrome, Safari, Edge */
+  line-clamp: 2;         /* Standard property for modern compatibility */
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
   .instructor-actions {
     display: flex;
     gap: 12px;
@@ -164,7 +181,18 @@ $error-red: #ef4444;
       &:disabled { opacity: 0.6; cursor: not-allowed; }
     }
   }
-
+/* Target the custom class we added in Swal */
+.custom-swal-textarea {
+  min-height: 350px !important; /* Forces a large minimum height */
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05) !important;
+  
+  &:focus {
+    border-color: #10b981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+  }
+}
   .file-item.clickable {
     display: flex;
     align-items: center;
